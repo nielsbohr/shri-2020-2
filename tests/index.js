@@ -1,5 +1,6 @@
 const fs = require('fs');
-const lint = require('../index');
+require('../index');
+// require('../build/linter');
 
 fs.readFile(`${__dirname}/jsons/index.json`, 'utf8', (err, str) => {
     if (err) {
@@ -7,5 +8,6 @@ fs.readFile(`${__dirname}/jsons/index.json`, 'utf8', (err, str) => {
         return
     }
 
-    lint(str);
+    const errors = lint(str);
+    console.log(JSON.stringify(errors));
 });

@@ -1,0 +1,26 @@
+{
+  "name": "shri-2020-2",
+  "version": "1.0.0",
+  "description": "2 test task for SHRI 2020",
+  "main": "index.js",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "test": "node ./tests/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nielsbohr/shri-2020-2.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/nielsbohr/shri-2020-2/issues"
+  },
+  "homepage": "https://github.com/nielsbohr/shri-2020-2#readme",
+  "devDependencies": {
+    "webpack": "^4.41.2",
+    "webpack-cli": "^3.3.10"
+  }
+}

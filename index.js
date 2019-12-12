@@ -1,11 +1,14 @@
-const warningLinter = require('./helpers/warningLinter');
-const textLinter = require('./helpers/textLinter');
-const columnLinter = require('./helpers/columnLinter');
+const { Linter } = require('./core/init');
 
-module.exports = function lint(json) {
-    const errors = [];
-    warningLinter(json, errors);
-    textLinter(json, errors);
-    columnLinter(json, errors);
-    console.log(JSON.stringify(errors));
+if (typeof window === 'undefined') {
+    global.lint = lint;
+} else {
+    window.lint = lint;
+}
+
+function lint(json) {
+    const linter = new Linter(json);
+    linter.lint();
+
+    return linter.errors;
 };

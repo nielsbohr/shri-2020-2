@@ -106,10 +106,16 @@
                                                     ],
                                                     "content": [
                                                         {
+                                                            "block": "button",
+                                                            "mods": {
+                                                                "size": "l"
+                                                            }
+                                                        },
+                                                        {
                                                             "block": "placeholder",
                                                             "mods": {
                                                                 "view": "primary",
-                                                                "size": "m"
+                                                                "size": "xl"
                                                             }
                                                         },
                                                         {
