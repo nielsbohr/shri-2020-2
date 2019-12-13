@@ -8,7 +8,6 @@ if (typeof window === 'undefined') {
 
 function lint(json) {
     const linter = new Linter(json);
-    linter.lint();
 
-    return linter.errors;
+    return linter.lint();
 };

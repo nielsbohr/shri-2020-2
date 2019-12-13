@@ -1,64 +1,66 @@
-const findBrackets = require('../helpers/findBrackets');
-const lineBreakG = new RegExp("\r\n?|\n|\u2028|\u2029", "g");
-const rBlock = new RegExp( "\"block\"", "g" );
-let SCOPE_WARNING = {
-    active: false
-};
+const textLinter = require('../rules/textLinter');
+const gridLinter = require('../rules/gridLinter');
+const rBlock = /\"block\"\s*:\s*\"(warning|placeholder|text|button|grid)\"/g;
 
 module.exports = function() {
-    const results = [];
-    for ( let n = 0, loc = {}, block; rBlock.test(this.json); n++) {
-        loc = findBrackets(this.json, rBlock.lastIndex);
-        if (SCOPE_WARNING.active) {
-            if (loc.start > SCOPE_WARNING.end) {
-                SCOPE_WARNING = {
-                    active: false
-                }
+    for (let n = 0; rBlock.test(this.json); n++) {
+        const block = this.parseBlock(rBlock.lastIndex);
+        const {loc} = block;
+        let scope = this.getScope('warning');
+        while (scope !== false) {
+            if (loc.start > scope.loc.end) {
+                this.delScope('warning');
+                scope = this.getScope('warning');
+            } else {
+                break;
             }
         }
-        block = JSON.parse(this.json.slice(loc.start, loc.end + 1));
         switch (block.block) {
             case 'warning':
-                SCOPE_WARNING = {
-                    active: true,
-                    start: loc.start,
-                    end: loc.end
-                };
-                if (Array.isArray(block.content)) {
-                    for (let i = 0, textSize; i < block.content.length; i++) {
-                        if (block.content[i].block === 'text') {
-                            if (textSize && textSize !== block.content[i].mods.size) {
-                                this.addError('WARNING.TEXT_SIZES_SHOULD_BE_EQUAL', loc);
-                            } else if (!textSize) {    
-                                textSize = block.content[i].mods.size;
-                            }
-                        }
-                    }
-                }
+                this.addScope('warning', {loc});
                 break;
             case 'placeholder':
-                if (SCOPE_WARNING.button) {
-                    this.addError('WARNING.INVALID_BUTTON_POSITION', {
-                        start: SCOPE_WARNING.button.loc.start,
-                        end: SCOPE_WARNING.button.loc.end,
-                    });
-                }
-                if (SCOPE_WARNING.active) {
+                if (scope) {
+                    if (Array.isArray(scope.button)) {
+                        for (let i = 0; i < scope.button.length; i++) {
+                            this.addError('WARNING.INVALID_BUTTON_POSITION', {
+                                start: scope.button[i].loc.start,
+                                end: scope.button[i].loc.end,
+                            });   
+                        }
+                    }
                     if (block.mods.size !== 's' && block.mods.size !== 'm' && block.mods.size !== 'l') {
                         this.addError('WARNING.INVALID_PLACEHOLDER_SIZE', {
-                            start: SCOPE_WARNING.start,
-                            end: SCOPE_WARNING.end,
+                            start: scope.loc.start,
+                            end: scope.loc.end,
                         });
                     }
                 }
                 break;
             case 'button':
-                if (SCOPE_WARNING.active) {
-                    SCOPE_WARNING.button = {
-                        active: true,
-                        loc
-                    };
+                if (scope) {
+                    if (!scope.hasOwnProperty('button')) {
+                        scope.button = [];
+                    }
+                    scope.button.push({loc});
+                    this.setScope('warning', scope);
                 }
+                break;
+            case 'text':
+                if (scope) {
+                    if (!scope.text) {
+                        scope.text = {
+                            size: block.mods.size
+                        };
+                        this.setScope('warning', scope);
+                    } else if (scope.text.size && block.mods) {
+                        if (block.mods.size !== scope.text.size) {
+                            this.addError('WARNING.TEXT_SIZES_SHOULD_BE_EQUAL', loc);
+                        }
+                    }
+                }
+                textLinter.apply(this, [block]);
+                break;
         }
     }
 };
