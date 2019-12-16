@@ -1,4 +1,4 @@
-const Group = require('../../core/Group');
+const Group = require('../../classes/Group');
 
 class WarningGroup extends Group {
     constructor(json) {

@@ -1,4 +1,4 @@
-const { Linter } = require('./core/Linter');
+const { Linter } = require('./classes/Linter');
 
 if (typeof window === 'undefined') {
     global.lint = lint;
