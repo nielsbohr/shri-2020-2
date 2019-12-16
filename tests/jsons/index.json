@@ -252,8 +252,32 @@
                                                             "mods": {
                                                                 "view": "primary",
                                                                 "size": "l",
+                                                                "type": "h3",
+                                                                "align": "center"
+                                                            }
+                                                        },
+                                                        {
+                                                            "block": "text",
+                                                            "mods": {
+                                                                "view": "primary",
+                                                                "size": "l",
+                                                                "type": "h2",
+                                                                "align": "center"
+                                                            }
+                                                        },
+                                                        {
+                                                            "block": "text",
+                                                            "mods": {
+                                                                "view": "primary",
+                                                                "size": "l",
                                                                 "type": "h1",
                                                                 "align": "center"
+                                                            }
+                                                        },
+                                                        {
+                                                            "block": "button",
+                                                            "mods": {
+                                                                "size": "l"
                                                             }
                                                         }
                                                     ]
