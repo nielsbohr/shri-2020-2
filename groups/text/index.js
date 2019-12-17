@@ -20,7 +20,8 @@ class TextGroup extends Group {
       },
     };
 
-    this.getBlocksFromRules(path.join(__dirname, './rules'));
+    this.getRules(path.join(__dirname, './rules'));
+    this.getBlocksFromRules();
   }
 
   // проходим по правилам

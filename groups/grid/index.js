@@ -8,7 +8,8 @@ class GridGroup extends Group {
     this._type = 'GRID';
     this._rules = [];
     this._groupBlocks = ['grid'];
-    this.getBlocksFromRules(path.join(__dirname, './rules'));
+    this.getRules(path.join(__dirname, './rules'));
+    this.getBlocksFromRules();
   }
 
   // проходим по правилам
@@ -37,13 +38,13 @@ class GridGroup extends Group {
     // проходим по правилам
     let res;
 
-    for (let i = 0; i < this.rules.length; i++) {
+    for (let i = 0; i < this.rules.length; i += 1) {
       if (this.rules[i].blocks.includes(block.block)) {
         res = this.rules[i].check(this.latest, block);
         if (res.error === true) {
           if (Array.isArray(res.loc)) {
-            for (let i = 0; i < res.loc.length; i++) {
-              this.addError(res, res.loc[i]);
+            for (let j = 0; j < res.loc.length; j += 1) {
+              this.addError(res, res.loc[j]);
             }
           } else {
             this.addError(res, block);

@@ -54,10 +54,13 @@ module.exports = class Group {
     this.scope.push(obj);
   }
 
-  getBlocksFromRules(dir) {
+  getRules(dir) {
     fs.readdirSync(dir).forEach((file) => {
       this._rules.push(require(`${dir}/${file}`));
     });
+  }
+
+  getBlocksFromRules() {
     this._blocks = this._rules.reduce((acc, cur) => {
       for (let i = 0; i < cur.blocks.length; i += 1) {
         if (!acc.includes(cur.blocks[i])) {

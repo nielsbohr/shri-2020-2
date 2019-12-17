@@ -1,23 +1,12 @@
 const fs = require('fs');
-require('../index');
-// require('../build/linter');
+const { equal } = require('assert');
+const { Linter } = require('../classes/Linter');
 
-fs.readFile(`${__dirname}/jsons/index.json`, 'utf8', (err, str) => {
-  if (err) {
-    console.log('File read failed:', err);
-    return;
-  }
 
-  const errors = lint(str);
-  console.log(`Filename index.json: ${JSON.stringify(errors)}`);
-});
+const json = fs.readFileSync(`${__dirname}/jsons/index.json`, 'utf8');
 
-fs.readFile(`${__dirname}/jsons/warning.json`, 'utf8', (err, str) => {
-  if (err) {
-    console.log('File read failed:', err);
-    return;
-  }
-
-  const errors = lint(str);
-  console.log(`Filename warning.json: ${JSON.stringify(errors)}`);
+describe('invalid-button-position v1', () => {
+  it('should return buttons', () => {
+    equal(new Linter(json).lint(), []);
+  });
 });

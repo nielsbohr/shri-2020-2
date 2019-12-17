@@ -8,7 +8,8 @@ class WarningGroup extends Group {
     this._type = 'WARNING';
     this._groupBlocks = ['warning'];
     this._rules = [];
-    this.getBlocksFromRules(path.join(__dirname, './rules'));
+    this.getRules(path.join(__dirname, './rules'));
+    this.getBlocksFromRules();
   }
 
   check(block) {
