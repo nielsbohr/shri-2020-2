@@ -98,7 +98,7 @@ module.exports = class Group {
                 loc.line.start = line;
                 offset = loc.end;
             } else {
-                loc.column.end = offset - cur + 1;
+                loc.column.end = offset - cur + 2;
                 loc.line.end = line;
                 return loc;
             }
