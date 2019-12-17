@@ -10,6 +10,6 @@ module.exports = {
   node: {
     global: true,
     __filename: 'mock',
-    __dirname: 'mock'
-  }
+    __dirname: 'mock',
+  },
 };

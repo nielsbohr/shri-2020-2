@@ -7,7 +7,10 @@
     "test": "tests"
   },
   "scripts": {
-    "test": "node ./tests/index.js"
+    "test": "node ./tests/index.js",
+    "build": "npx webpack",
+    "lint": "npx eslint **/*.js",
+    "lint-fix": "npx eslint **/*.js --fix"
   },
   "repository": {
     "type": "git",
@@ -20,6 +23,9 @@
   },
   "homepage": "https://github.com/nielsbohr/shri-2020-2#readme",
   "devDependencies": {
+    "eslint": "^6.7.2",
+    "eslint-config-airbnb-base": "^14.0.0",
+    "eslint-plugin-import": "^2.19.1",
     "webpack": "^4.41.2",
     "webpack-cli": "^3.3.10"
   }
