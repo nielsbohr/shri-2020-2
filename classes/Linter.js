@@ -1,13 +1,14 @@
 const WarningGroup = require('../groups/warning');
 const TextGroup = require('../groups/text');
+const GridGroup = require('../groups/grid');
 const findBrackets = require('../helpers/findBrackets');
 
 class Linter {
     constructor (json) {
         this._json = json;
         this._errors = [];
-        this._groups = [new WarningGroup(json), new TextGroup(json)];
-        this._neededBlocks = this._groups[0].blocks;
+        this._groups = [new WarningGroup(json), new TextGroup(json), new GridGroup(json)];
+        this._neededBlocks = this._groups[2].blocks;
         this._regexBlock = new RegExp(`\"block\"\\s*:\\s*\"(${this._neededBlocks.join('|')})\"`, `g`);
     }
 
@@ -35,7 +36,7 @@ class Linter {
             }
         }
         // return [...this.groups[0].errors, ...this.groups[1].errors]
-        return this.groups[0].errors
+        return this.groups[2].errors
     }
 
     parseBlock(index) {

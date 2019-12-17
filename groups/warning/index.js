@@ -12,32 +12,6 @@ class WarningGroup extends Group {
             require('./rules/invalid-placeholder-size'),
         ];
         this._blocks = ['warning', 'text', 'button', 'placeholder'];
-        this._scope = [];
-    }
-
-    get latest() {
-        if (this.scope.length > 0) {
-            return this.scope[this.scope.length - 1];
-        }
-        return false;
-    }
-
-    set latest(obj) {
-        if (this.scope.length > 0) {
-            this.scope[this.scope.length - 1] = obj;
-        }
-    }
-
-    delLatest() {
-        if (this.scope.length > 0) {
-            this.scope.pop();
-        }
-    }
-
-    addLatest(obj) {
-        obj.errors = [];
-        obj.buttons = [];
-        this.scope.push(obj);
     }
 
     check(block) {

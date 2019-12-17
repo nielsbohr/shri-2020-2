@@ -1099,11 +1099,11 @@
                                     "block": "grid",
                                     "elem": "fraction",
                                     "elemMods": {
-                                        "m-col": 5
+                                        "m-col": 7
                                     },
                                     "content": [
                                         {
-                                            "block": "history",
+                                            "block": "offer",
                                             "content": [
                                                 {
                                                     "block": "history",
@@ -2410,7 +2410,7 @@
                                     "block": "grid",
                                     "elem": "fraction",
                                     "elemMods": {
-                                        "m-col": 5
+                                        "m-col": 3
                                     },
                                     "content": [
                                         {

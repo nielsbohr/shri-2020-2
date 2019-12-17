@@ -5,7 +5,6 @@ class TextGroup extends Group {
         super(json);
 
         this._type = 'TEXT';
-        this._json = json;
         this._rules = [
             require('./rules/invalid-h3-position'),
             require('./rules/invalid-h2-position'),
