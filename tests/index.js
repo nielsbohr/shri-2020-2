@@ -1,6 +1,6 @@
 const fs = require('fs');
-require('../index');
-// require('../build/linter');
+// require('../index');
+require('../build/linter');
 
 fs.readFile(`${__dirname}/jsons/index.json`, 'utf8', (err, str) => {
     if (err) {

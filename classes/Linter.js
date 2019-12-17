@@ -8,7 +8,7 @@ class Linter {
         this._json = json;
         this._errors = [];
         this._groups = [new WarningGroup(json), new TextGroup(json), new GridGroup(json)];
-        this._neededBlocks = this._groups[2].blocks;
+        this._neededBlocks = [...this._groups[0].blocks, ...this._groups[1].blocks, ...this._groups[2].blocks]
         this._regexBlock = new RegExp(`\"block\"\\s*:\\s*\"(${this._neededBlocks.join('|')})\"`, `g`);
     }
 
@@ -35,8 +35,8 @@ class Linter {
                 this.groups[j].check(block);
             }
         }
-        // return [...this.groups[0].errors, ...this.groups[1].errors]
-        return this.groups[2].errors
+        return [...this.groups[0].errors, ...this.groups[1].errors, ...this.groups[2].errors]
+        // return this.groups[2].errors
     }
 
     parseBlock(index) {
