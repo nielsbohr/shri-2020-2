@@ -6,6 +6,20 @@ const { lint } = require('../index');
 const json = fs.readFileSync(`${__dirname}/jsons/index.json`, 'utf8');
 const expected = [
   {
+    code: 'TEXT.SEVERAL_H1',
+    error: 'Заголовок первого уровня (блок text с модификатором type h1) на странице должен быть единственным.',
+    location: {
+      end: {
+        column: 58,
+        line: 276,
+      },
+      start: {
+        column: 57,
+        line: 268,
+      },
+    },
+  },
+  {
     code: 'WARNING.TEXT_SIZES_SHOULD_BE_EQUAL',
     error: 'Текст не является эталонным.',
     location: {

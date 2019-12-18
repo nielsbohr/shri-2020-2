@@ -18,13 +18,11 @@ module.exports = class SEVERAL_H1 extends Rule {
     const block = this.parseBlock(loc);
 
     if (block.mods) {
-      if (block.mods.type) {
-        if (block.mods.type === 'h1') {
-          if (this._scope.h1) {
-            this.addError(loc);
-          }
-          this._scope.h1 = true;
+      if (block.mods.type === 'h1') {
+        if (this._scope.h1) {
+          this.addError(loc);
         }
+        this._scope.h1 = true;
       }
     }
   }
