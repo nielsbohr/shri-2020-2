@@ -1,5 +1,5 @@
 module.exports = {
-  blocks: ['placeholder'],
+  blocks: ['button', 'placeholder'],
   group: 'warning',
   text: 'Блок button в блоке warning не может находиться перед блоком placeholder на том же или более глубоком уровне вложенности.',
   code: 'INVALID_BUTTON_POSITION',
