@@ -3,6 +3,7 @@ module.exports = {
   group: 'warning',
   text: 'Допустимые размеры для блока placeholder в блоке warning (значение модификатора size): s, m, l.',
   code: 'INVALID_PLACEHOLDER_SIZE',
+  scope: 'latest',
   loc: 'element',
 
   check(scope, block) {

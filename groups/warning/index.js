@@ -8,8 +8,27 @@ class WarningGroup extends Group {
     this._type = 'WARNING';
     this._groupBlocks = ['warning'];
     this._rules = [];
+    this._scope = [];
     this.getRules(path.join(__dirname, './rules'));
     this.getBlocksFromRules();
+  }
+
+  get latest() {
+    if (this.scope.length > 0) {
+      return this.scope[this.scope.length - 1];
+    }
+    return false;
+  }
+
+  delLatest() {
+    if (this.scope.length > 0) {
+      this.scope.pop();
+    }
+  }
+
+  addLatest(obj) {
+    obj.buttons = [];
+    this.scope.push(obj);
   }
 
   check(block) {
@@ -28,21 +47,14 @@ class WarningGroup extends Group {
     }
 
     // проходим по правилам
-    let res;
-
-    if (this.latest !== false) {
-      for (let i = 0; i < this.rules.length; i += 1) {
-        if (this.rules[i].blocks.includes(block.block)) {
-          res = this.rules[i].check(this.latest, block);
-          if (res.error === true) {
-            if (Array.isArray(res.loc)) {
-              for (let j = 0; j < res.loc.length; j += 1) {
-                this.addError(res, res.loc[j]);
-              }
-            } else {
-              this.addError(res, block);
-            }
-          }
+    for (let i = 0, res; i < this.rules.length; i += 1) {
+      if (this.rules[i].blocks.includes(block.block)) {
+        res = this.rules[i].check(
+          this.rules[i].scope === 'latest' ? this.latest : this.scope,
+          block,
+        );
+        if (res.error === true) {
+          this.addError(res, block);
         }
       }
     }

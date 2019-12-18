@@ -12,6 +12,23 @@ class GridGroup extends Group {
     this.getBlocksFromRules();
   }
 
+  get latest() {
+    if (this.scope.length > 0) {
+      return this.scope[this.scope.length - 1];
+    }
+    return false;
+  }
+
+  delLatest() {
+    if (this.scope.length > 0) {
+      this.scope.pop();
+    }
+  }
+
+  addLatest(obj) {
+    this.scope.push(obj);
+  }
+
   // проходим по правилам
   check(block) {
     // Включаем блок grid в scope

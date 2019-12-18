@@ -26,13 +26,13 @@ class TextGroup extends Group {
 
   // проходим по правилам
   check(block) {
-    for (let i = 0, res; i < this.rules.length; i++) {
+    for (let i = 0, res; i < this.rules.length; i += 1) {
       if (this.rules[i].blocks.includes(block.block)) {
         res = this.rules[i].check(this.scope, block);
         if (res.error === true) {
           if (Array.isArray(res.loc)) {
-            for (let i = 0; i < res.loc.length; i++) {
-              this.addError(res, res.loc[i]);
+            for (let j = 0; j < res.loc.length; j += 1) {
+              this.addError(res, res.loc[j]);
             }
           } else {
             this.addError(res, block);
