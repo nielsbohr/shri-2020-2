@@ -29,6 +29,7 @@ module.exports = class INVALID_BUTTON_SIZE extends Rule {
             refSize = this._sizes[this._sizes.indexOf(blockParent.content[i].mods.size) + 1];
             if (size !== refSize) {
               this.addError(loc);
+              break;
             }
           }
         }
