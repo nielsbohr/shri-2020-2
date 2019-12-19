@@ -4,7 +4,7 @@ module.exports = class INVALID_BUTTON_POSITION extends Rule {
   constructor(json) {
     super(json);
     this._blocks = ['placeholder', 'button'];
-    this._type = 'WARNING';
+    this._code = 'WARNING.INVALID_BUTTON_POSITION';
     this._text = 'Блок button в блоке warning не может находиться перед блоком placeholder на том же или более глубоком уровне вложенности.';
     this._buttons = [];
     this.lint();

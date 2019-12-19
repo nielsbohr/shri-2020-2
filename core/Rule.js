@@ -60,7 +60,7 @@ module.exports = class Rule {
   addError(loc) {
     const info = this.getBlockInfo(loc);
     this._errors.push({
-      code: `${this._type}.${this.constructor.name}`,
+      code: this._code,
       error: this._text,
       location: {
         start: {

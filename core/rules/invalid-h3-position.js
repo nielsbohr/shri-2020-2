@@ -4,8 +4,8 @@ module.exports = class INVALID_H3_POSITION extends Rule {
   constructor(json) {
     super(json);
     this._blocks = ['text'];
-    this._type = 'TEXT';
-    this._text = 'Заголовок второго уровня (блок text с модификатором type h3) не может находиться перед заголовком первого уровня на том же или более глубоком уровне вложенности.';
+    this._code = 'TEXT.INVALID_H3_POSITION';
+    this._text = 'Заголовок третьего уровня (блок text с модификатором type h3) не может находиться перед заголовком первого уровня на том же или более глубоком уровне вложенности.';
     this._scope = [];
     this.lint();
     return this._errors;
@@ -25,7 +25,7 @@ module.exports = class INVALID_H3_POSITION extends Rule {
           this.addError(locH2);
         }
       });
-    } else if (block.mods.type === 'h3') {
+    } else if (block && block.mods && block.mods.type === 'h3') {
       this._scope.push(loc);
     }
   }

@@ -13,4 +13,8 @@ module.exports = {
     __dirname: 'mock',
     fs: 'empty',
   },
+  externals: {
+    fs: "require('fs')",
+    path: "require('path')",
+  },
 };

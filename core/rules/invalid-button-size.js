@@ -4,7 +4,7 @@ module.exports = class INVALID_BUTTON_SIZE extends Rule {
   constructor(json) {
     super(json);
     this._blocks = ['button'];
-    this._type = 'WARNING';
+    this._code = 'WARNING.INVALID_BUTTON_SIZE';
     this._text = 'Размер кнопки блока warning должен быть на 1 шаг больше эталонного.';
     this._sizes = ['xxs', 'xs', 's', 'm', 'l', 'xl', 'xxl', 'xxxl', 'xxxxl', 'xxxxxl'];
     this.lint();

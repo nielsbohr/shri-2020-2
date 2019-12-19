@@ -4,7 +4,7 @@ module.exports = class INVALID_BUTTON_SIZE extends Rule {
   constructor(json) {
     super(json);
     this._blocks = ['placeholder'];
-    this._type = 'WARNING';
+    this._code = 'WARNING.INVALID_BUTTON_SIZE';
     this._text = 'Допустимые размеры для блока placeholder в блоке warning (значение модификатора size): s, m, l.';
     this._sizes = ['s', 'm', 'l'];
     this.lint();

@@ -4,7 +4,7 @@ module.exports = class TEXT_SIZES_SHOULD_BE_EQUAL extends Rule {
   constructor(json) {
     super(json);
     this._blocks = ['warning'];
-    this._type = 'WARNING';
+    this._code = 'WARNING.TEXT_SIZES_SHOULD_BE_EQUAL';
     this._text = 'Текст не является эталонным.';
     this.lint();
     return this._errors;

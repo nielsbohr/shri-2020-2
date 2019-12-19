@@ -1,12 +1,11 @@
 const fs = require('fs');
 const { deepEqual } = require('assert');
-const { lint } = require('../index');
+// const { lint } = require('../core/lint');
+require('../build/linter');
 
-let json; let
-  expected;
 
-json = fs.readFileSync(`${__dirname}/jsons/text/several-h1.json`, 'utf8');
-expected = [
+const json = fs.readFileSync(`${__dirname}/jsons/text/several-h1.json`, 'utf8');
+const expected = [
   {
     code: 'TEXT.SEVERAL_H1',
     error: 'Заголовок первого уровня (блок text с модификатором type h1) на странице должен быть единственным.',
