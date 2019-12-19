@@ -11,5 +11,6 @@ module.exports = {
     global: true,
     __filename: 'mock',
     __dirname: 'mock',
+    fs: 'empty',
   },
 };
