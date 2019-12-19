@@ -45,16 +45,16 @@ module.exports = class TOO_MUCH_MARKETING_BLOCKS extends Rule {
   }
 
   lintCount(grid) {
-    let { columns } = grid;
     let columnsMarket = 0;
     for (let i = 0; i < grid.content.length; i += 1) {
-      columns -= grid.content[i].columns;
       if (this._market.includes(grid.content[i].content[0].block)) {
         columnsMarket += grid.content[i].columns;
       }
     }
 
-    if (columnsMarket > parseInt(grid.columns / 2, 10) && columns <= 0) {
+    console.log(grid.columns);
+    console.log(columnsMarket);
+    if (columnsMarket > parseInt(grid.columns / 2, 10)) {
       this.addError(grid.loc);
     }
   }

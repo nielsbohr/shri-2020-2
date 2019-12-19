@@ -20,8 +20,9 @@ module.exports = class SEVERAL_H1 extends Rule {
     if (block && block.mods && block.mods.type === 'h1') {
       if (this._scope.h1) {
         this.addError(loc);
+      } else {
+        this._scope.h1 = true;
       }
-      this._scope.h1 = true;
     }
   }
 };

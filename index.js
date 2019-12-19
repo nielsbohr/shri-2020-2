@@ -6,6 +6,7 @@ const rules = [
   require('./core/rules/several-h1'),
   require('./core/rules/text-sizes-should-be-equal'),
   require('./core/rules/invalid-placeholder-size'),
+  require('./core/rules/too-much-marketing-blocks'),
 ];
 
 function lint(json) {

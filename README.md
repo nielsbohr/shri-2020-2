@@ -1,14 +1,11 @@
 ### Структура правил:
 
-Находятся по адресу ```./groups/*Название группы*/rules/*Название правила*```
+Находятся по адресу ```./core/rules/*Название правила*```
 
 ```
-module.exports = {
-  blocks: ['button', 'placeholder'], // необходимые блоки
-  group: 'warning', // группа правила
-  text: 'Блок button в блоке warning не может находиться перед блоком placeholder на том же или более глубоком уровне вложенности.', // текст ошибки
-  code: 'INVALID_BUTTON_POSITION', // код ошибки
-  loc: 'elements', // локацию ошибки (группа, элемент)
+  this._blocks = ['placeholder', 'button']; // необходимые блоки для парсинга
+  this._code = 'WARNING.INVALID_BUTTON_POSITION'; // группа и код ошибки
+  this._text = 'Блок button в блоке warning не может находиться перед блоком placeholder на том же или более глубоком уровне вложенности.'; // текст ошибки
 
   check(scope) {
       // логика правила
