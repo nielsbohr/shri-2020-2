@@ -1,0 +1,32 @@
+{
+    "block": "page",
+    "content": [
+        {
+            "block": "text",
+            "mods": {
+                "view": "primary",
+                "size": "l",
+                "type": "h1",
+                "align": "center"
+            }
+        },
+        {
+            "block": "text",
+            "mods": {
+                "view": "primary",
+                "size": "l",
+                "type": "h1",
+                "align": "center"
+            }
+        },
+        {
+            "block": "text",
+            "mods": {
+                "view": "primary",
+                "size": "l",
+                "type": "h1",
+                "align": "center"
+            }
+        }
+    ]
+}

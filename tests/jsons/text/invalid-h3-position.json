@@ -1,0 +1,47 @@
+{
+    "block": "page",
+    "content": [
+        {
+            "block": "text",
+            "mods": {
+                "view": "primary",
+                "size": "l",
+                "type": "h3",
+                "align": "center"
+            }
+        },
+        {
+            "block": "text",
+            "mods": {
+                "view": "primary",
+                "size": "l",
+                "type": "h3",
+                "align": "center"
+            }
+        },
+        {
+            "block": "history",
+            "elem": "details",
+            "content": [
+                {
+                    "block": "text",
+                    "mods": {
+                        "view": "primary",
+                        "size": "l",
+                        "type": "h3",
+                        "align": "center"
+                    }
+                },
+                {
+                    "block": "text",
+                    "mods": {
+                        "view": "primary",
+                        "size": "l",
+                        "type": "h2",
+                        "align": "center"
+                    }
+                }
+            ]
+        }
+    ]
+}

@@ -1,0 +1,22 @@
+{
+    "block": "page",
+    "content": [
+        {
+            "block": "warning",
+            "content": [
+                {
+                    "block": "button",
+                    "mods": {
+                        "size": "s"
+                    }
+                },
+                {
+                    "block": "text",
+                    "mods": {
+                        "size": "l"
+                    }
+                }
+            ]
+        }
+    ]
+}

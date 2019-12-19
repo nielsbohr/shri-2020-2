@@ -1,0 +1,51 @@
+{
+    "block": "page",
+    "content": [
+        {
+            "block": "warning",
+            "content": [
+                {
+                    "block": "button",
+                    "mods": {
+                        "size": "xl"
+                    }
+                },
+                {
+                    "block": "button",
+                    "mods": {
+                        "size": "xl"
+                    }
+                },
+                {
+                    "block": "warning",
+                    "content": [
+                        {
+                            "block": "button",
+                            "mods": {
+                                "size": "xl"
+                            }
+                        },
+                        {
+                            "block": "placeholder",
+                            "mods": {
+                                "size": "m"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "block": "text",
+                    "mods": {
+                        "size": "l"
+                    }
+                },
+                {
+                    "block": "placeholder",
+                    "mods": {
+                        "size": "m"
+                    }
+                }
+            ]
+        }
+    ]
+}

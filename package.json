@@ -7,7 +7,7 @@
     "test": "tests"
   },
   "scripts": {
-    "test": "node ./tests/index.js",
+    "test": "node ./tests/run_mocha.js",
     "build": "npx webpack",
     "lint": "npx eslint **/*.js",
     "lint-fix": "npx eslint **/*.js --fix"

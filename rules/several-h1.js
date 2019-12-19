@@ -17,13 +17,11 @@ module.exports = class SEVERAL_H1 extends Rule {
     const loc = this.findBrackets();
     const block = this.parseBlock(loc);
 
-    if (block.mods) {
-      if (block.mods.type === 'h1') {
-        if (this._scope.h1) {
-          this.addError(loc);
-        }
-        this._scope.h1 = true;
+    if (block && block.mods && block.mods.type === 'h1') {
+      if (this._scope.h1) {
+        this.addError(loc);
       }
+      this._scope.h1 = true;
     }
   }
 };

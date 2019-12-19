@@ -27,10 +27,10 @@ module.exports = class Rule {
     return JSON.parse(this._json.slice(loc.start, loc.end + 1));
   }
 
-  findBrackets() {
+  findBrackets(loc = this._regex.lastIndex) {
     return {
-      start: this.findBracket(this._regex.lastIndex, true),
-      end: this.findBracket(this._regex.lastIndex, false),
+      start: this.findBracket(loc, true),
+      end: this.findBracket(loc, false),
     };
   }
 

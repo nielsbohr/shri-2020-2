@@ -13,6 +13,7 @@ module.exports = class TEXT_SIZES_SHOULD_BE_EQUAL extends Rule {
   check() {
     const loc = this.findBrackets();
     const block = this.parseBlock(loc);
+
     for (let i = 0, text, referenceSize; i < block.content.length; i += 1) {
       if (block.content[i].block === 'text') {
         text = block.content[i];
