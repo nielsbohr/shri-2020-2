@@ -1,7 +1,6 @@
 const fs = require('fs');
 const { deepEqual } = require('assert');
-// const { lint } = require('../core/lint');
-require('../build/linter');
+const { lint } = require('../index');
 
 
 const json = fs.readFileSync(`${__dirname}/jsons/text/invalid-h2-position.json`, 'utf8');

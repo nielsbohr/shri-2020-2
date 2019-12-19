@@ -20,9 +20,10 @@ module.exports = class INVALID_H3_POSITION extends Rule {
       const locParent = this.findBrackets(loc.start - 1);
 
       // кто живет в родителе
-      this._scope.forEach((locH2) => {
-        if (locH2.start > locParent.start && locH2.end < locParent.end) {
-          this.addError(locH2);
+      this._scope.forEach((locH3) => {
+        if (locH3.start > locParent.start && locH3.end < locParent.end) {
+          this.addError(locH3);
+          this._scope = [];
         }
       });
     } else if (block && block.mods && block.mods.type === 'h3') {
