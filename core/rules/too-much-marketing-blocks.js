@@ -51,9 +51,6 @@ module.exports = class TOO_MUCH_MARKETING_BLOCKS extends Rule {
         columnsMarket += grid.content[i].columns;
       }
     }
-
-    console.log(grid.columns);
-    console.log(columnsMarket);
     if (columnsMarket > parseInt(grid.columns / 2, 10)) {
       this.addError(grid.loc);
     }
