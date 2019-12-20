@@ -9,6 +9,7 @@ module.exports = class TOO_MUCH_MARKETING_BLOCKS extends Rule {
     this._text = 'Маркетинговые блоки занимают больше половины от всех колонок блока grid.';
     this._grid = [];
     this.lint();
+    this.lintCount();
     return this._errors;
   }
 
@@ -34,25 +35,17 @@ module.exports = class TOO_MUCH_MARKETING_BLOCKS extends Rule {
     }
   }
 
-  lint() {
-    this._regex = new RegExp(`"block"\\s*:\\s*"(${this._blocks.join('|')})"`, 'g');
-    for (let n = 0; this._regex.test(this._json); n += 1) {
-      this.check();
-    }
+  lintCount() {
     this._grid.forEach((grid) => {
-      this.lintCount(grid);
-    });
-  }
-
-  lintCount(grid) {
-    let columnsMarket = 0;
-    for (let i = 0; i < grid.content.length; i += 1) {
-      if (this._market.includes(grid.content[i].content[0].block)) {
-        columnsMarket += grid.content[i].columns;
+      let columnsMarket = 0;
+      for (let i = 0; i < grid.content.length; i += 1) {
+        if (this._market.includes(grid.content[i].content[0].block)) {
+          columnsMarket += grid.content[i].columns;
+        }
       }
-    }
-    if (columnsMarket > parseInt(grid.columns / 2, 10)) {
-      this.addError(grid.loc);
-    }
+      if (columnsMarket > parseInt(grid.columns / 2, 10)) {
+        this.addError(grid.loc);
+      }
+    });
   }
 };

@@ -5,7 +5,7 @@ module.exports = class INVALID_H3_POSITION extends Rule {
     super(json);
     this._blocks = ['text'];
     this._code = 'TEXT.INVALID_H3_POSITION';
-    this._text = 'Заголовок третьего уровня (блок text с модификатором type h3) не может находиться перед заголовком первого уровня на том же или более глубоком уровне вложенности.';
+    this._text = 'Заголовок третьего уровня (блок text с модификатором type h3) не может находиться перед заголовком второго уровня на том же или более глубоком уровне вложенности.';
     this._scope = [];
     this.lint();
     return this._errors;

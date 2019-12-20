@@ -2,11 +2,15 @@ const fs = require('fs');
 const { deepEqual } = require('assert');
 const { lint } = require('../index');
 
-const json = fs.readFileSync(`${__dirname}/jsons/warning/invalid-placeholder-size.json`, 'utf8');
+const filename = 'invalid-placeholder-size';
+const code = 'WARNING.INVALID_PLACEHOLDER_SIZE';
+const error = 'Допустимые размеры для блока placeholder в блоке warning (значение модификатора size): s, m, l.';
+
+const json = fs.readFileSync(`${__dirname}/jsons/warning/${filename}.json`, 'utf8');
 const expected = [
   {
-    code: 'WARNING.INVALID_PLACEHOLDER_SIZE',
-    error: 'Допустимые размеры для блока placeholder в блоке warning (значение модификатора size): s, m, l.',
+    code,
+    error,
     location: {
       end: {
         column: 18,
@@ -20,8 +24,8 @@ const expected = [
   },
 ];
 
-describe('WARNING.INVALID_PLACEHOLDER_SIZE', () => {
-  it('Допустимые размеры для блока placeholder в блоке warning (значение модификатора size): s, m, l.', () => {
+describe(code, () => {
+  it(error, () => {
     deepEqual(lint(json), expected);
   });
 });

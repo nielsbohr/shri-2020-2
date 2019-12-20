@@ -2,11 +2,15 @@ const fs = require('fs');
 const { deepEqual } = require('assert');
 const { lint } = require('../index');
 
-const json = fs.readFileSync(`${__dirname}/jsons/warning/invalid-button-position.json`, 'utf8');
+const filename = 'invalid-button-position';
+const code = 'WARNING.INVALID_BUTTON_POSITION';
+const error = 'Блок button в блоке warning не может находиться перед блоком placeholder на том же или более глубоком уровне вложенности.';
+
+const json = fs.readFileSync(`${__dirname}/jsons/warning/${filename}.json`, 'utf8');
 const expected = [
   {
-    code: 'WARNING.INVALID_BUTTON_POSITION',
-    error: 'Блок button в блоке warning не может находиться перед блоком placeholder на том же или более глубоком уровне вложенности.',
+    code,
+    error,
     location: {
       end: {
         column: 18,
@@ -19,8 +23,8 @@ const expected = [
     },
   },
   {
-    code: 'WARNING.INVALID_BUTTON_POSITION',
-    error: 'Блок button в блоке warning не может находиться перед блоком placeholder на том же или более глубоком уровне вложенности.',
+    code,
+    error,
     location: {
       end: {
         column: 18,
@@ -33,8 +37,8 @@ const expected = [
     },
   },
   {
-    code: 'WARNING.INVALID_BUTTON_POSITION',
-    error: 'Блок button в блоке warning не может находиться перед блоком placeholder на том же или более глубоком уровне вложенности.',
+    code,
+    error,
     location: {
       end: {
         column: 26,
@@ -48,8 +52,8 @@ const expected = [
   },
 ];
 
-describe('INVALID_BUTTON_POSITION', () => {
-  it('Блок button в блоке warning не может находиться перед блоком placeholder на том же или более глубоком уровне вложенности.', () => {
+describe(code, () => {
+  it(error, () => {
     deepEqual(lint(json), expected);
   });
 });

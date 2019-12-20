@@ -2,12 +2,15 @@ const fs = require('fs');
 const { deepEqual } = require('assert');
 const { lint } = require('../index');
 
+const filename = 'invalid-h3-position';
+const code = 'TEXT.INVALID_H3_POSITION';
+const error = 'Заголовок третьего уровня (блок text с модификатором type h3) не может находиться перед заголовком второго уровня на том же или более глубоком уровне вложенности.';
 
-const json = fs.readFileSync(`${__dirname}/jsons/text/invalid-h3-position.json`, 'utf8');
+const json = fs.readFileSync(`${__dirname}/jsons/text/${filename}.json`, 'utf8');
 const expected = [
   {
-    code: 'TEXT.INVALID_H3_POSITION',
-    error: 'Заголовок третьего уровня (блок text с модификатором type h3) не может находиться перед заголовком первого уровня на том же или более глубоком уровне вложенности.',
+    code,
+    error,
     location: {
       end: {
         column: 18,
@@ -22,8 +25,8 @@ const expected = [
 ];
 
 
-describe('TEXT.INVALID_H3_POSITION', () => {
-  it('Заголовок третьего уровня (блок text с модификатором type h3) не может находиться перед заголовком первого уровня на том же или более глубоком уровне вложенности.', () => {
+describe(code, () => {
+  it(error, () => {
     deepEqual(lint(json), expected);
   });
 });

@@ -2,11 +2,15 @@ const fs = require('fs');
 const { deepEqual } = require('assert');
 const { lint } = require('../index');
 
-const json = fs.readFileSync(`${__dirname}/jsons/warning/invalid-button-size.json`, 'utf8');
+const filename = 'invalid-button-size';
+const code = 'WARNING.INVALID_BUTTON_SIZE';
+const error = 'Размер кнопки блока warning должен быть на 1 шаг больше эталонного.';
+
+const json = fs.readFileSync(`${__dirname}/jsons/warning/${filename}.json`, 'utf8');
 const expected = [
   {
-    code: 'WARNING.INVALID_BUTTON_SIZE',
-    error: 'Размер кнопки блока warning должен быть на 1 шаг больше эталонного.',
+    code,
+    error,
     location: {
       end: {
         column: 18,
@@ -20,8 +24,8 @@ const expected = [
   },
 ];
 
-describe('INVALID_BUTTON_SIZE', () => {
-  it('Возвращает кнопки размера не больше эталонного на один', () => {
+describe(code, () => {
+  it(error, () => {
     deepEqual(lint(json), expected);
   });
 });
