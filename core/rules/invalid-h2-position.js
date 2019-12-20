@@ -16,14 +16,8 @@ module.exports = class INVALID_H2_POSITION extends Rule {
     const block = this.parseBlock(loc);
 
     if (block && block.mods && block.mods.type === 'h1') {
-      // ищем родителя
-      // const locParent = this.findBrackets(loc.start - 1);
-
-      // кто живет в родителе
       this._scope.forEach((locH2) => {
-      // if (locH2.start > locParent.start && locH2.end < locParent.end) {
         this.addError(locH2);
-      // }
       });
       this._scope = [];
     } else if (block && block.mods && block.mods.type === 'h2') {
