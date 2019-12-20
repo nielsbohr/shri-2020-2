@@ -21,11 +21,15 @@ module.exports = class INVALID_BUTTON_POSITION extends Rule {
 
   buttonCheck() {
     this._regex = new RegExp('"block"\\s*:\\s*"button"', 'g');
-    for (let n = 0, buttonLoc; this._regex.test(this._json); n += 1) {
-      buttonLoc = this.findBrackets();
+    for (let n = 0, locButton; this._regex.test(this._json); n += 1) {
+      locButton = this.findBrackets();
       for (let i = 0; i < this._warnings.length; i += 1) {
-        if (buttonLoc.start > this._warnings[i].start && buttonLoc.end < this._warnings[i].end) {
-          this.addError(buttonLoc);
+        if (
+          locButton.start > this._warnings[i].loc.start
+            && locButton.end < this._warnings[i].loc.end
+            && locButton.end < this._warnings[i].locPlaceholder.start
+        ) {
+          this.addError(locButton);
           break;
         }
       }
@@ -38,7 +42,10 @@ module.exports = class INVALID_BUTTON_POSITION extends Rule {
     const blockParent = this.parseBlock(locParent);
 
     if (blockParent.block === 'warning') {
-      this._warnings.push(locParent);
+      this._warnings.push({
+        loc: locParent,
+        locPlaceholder: loc,
+      });
     }
   }
 };

@@ -1,10 +1,10 @@
 const rules = require('./rules.js');
 
 function lint(json) {
-  let errors = [];
+  const errors = [];
 
   rules.forEach((Rule) => {
-    errors = errors.concat(new (Rule())(json));
+    errors.push(...new (Rule())(json));
   });
 
   return errors;

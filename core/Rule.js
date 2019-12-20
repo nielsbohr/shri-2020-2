@@ -4,18 +4,6 @@ module.exports = class Rule {
     this._errors = [];
   }
 
-  get type() {
-    return this._type;
-  }
-
-  get errors() {
-    return this._errors;
-  }
-
-  get blocks() {
-    return this._blocks;
-  }
-
   lint() {
     this._regex = new RegExp(`"block"\\s*:\\s*"(${this._blocks.join('|')})"`, 'g');
     for (let n = 0; this._regex.test(this._json); n += 1) {
