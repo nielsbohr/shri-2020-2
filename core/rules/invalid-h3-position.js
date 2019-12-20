@@ -16,8 +16,8 @@ module.exports = class INVALID_H3_POSITION extends Rule {
     const block = this.parseBlock(loc);
 
     if (block && block.mods && block.mods.type === 'h2') {
-      this._scope.forEach((locH2) => {
-        this.addError(locH2);
+      this._scope.forEach((locH3) => {
+        this.addError(locH3);
       });
       this._scope = [];
     } else if (block && block.mods && block.mods.type === 'h3') {

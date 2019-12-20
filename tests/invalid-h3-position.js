@@ -11,11 +11,11 @@ const expected = [
     location: {
       end: {
         column: 18,
-        line: 34,
+        line: 16,
       },
       start: {
         column: 17,
-        line: 26,
+        line: 8,
       },
     },
   },

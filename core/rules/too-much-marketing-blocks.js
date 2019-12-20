@@ -16,12 +16,12 @@ module.exports = class TOO_MUCH_MARKETING_BLOCKS extends Rule {
     const loc = this.findBrackets();
     const block = this.parseBlock(loc);
 
-    if (block.block === 'grid' && block.mods && block.mods['m-columns']) {
+    if (block.mods && block.mods['m-columns']) {
       this._grid.push({
         loc,
-        columns: block.mods['m-columns'],
+        columns: parseInt(block.mods['m-columns'], 10),
       });
-    } else if (block.block === 'grid' && block.elemMods && block.elemMods['m-col']) {
+    } else if (block.elemMods && block.elemMods['m-col']) {
       for (let i = 0; i < this._grid.length; i += 1) {
         if (loc.start > this._grid[i].loc.start && loc.end < this._grid[i].loc.end) {
           if (!this._grid[i].content) this._grid[i].content = [];

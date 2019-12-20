@@ -9,20 +9,6 @@ const expected = [
     error: 'Блок button в блоке warning не может находиться перед блоком placeholder на том же или более глубоком уровне вложенности.',
     location: {
       end: {
-        column: 26,
-        line: 27,
-      },
-      start: {
-        column: 25,
-        line: 22,
-      },
-    },
-  },
-  {
-    code: 'WARNING.INVALID_BUTTON_POSITION',
-    error: 'Блок button в блоке warning не может находиться перед блоком placeholder на том же или более глубоком уровне вложенности.',
-    location: {
-      end: {
         column: 18,
         line: 12,
       },
