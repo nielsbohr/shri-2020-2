@@ -1,0 +1,19 @@
+{
+    "block": "page",
+    "content": [
+        {
+            "block": "warning",
+            "content": [
+                {
+                    "block": "placeholder",
+                    "mods": {
+                        "size": "xs"
+                    }
+                },
+                {
+                    "block": "placeholder"
+                }
+            ]
+        }
+    ]
+}

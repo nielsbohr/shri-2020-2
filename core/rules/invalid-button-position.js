@@ -8,15 +8,21 @@ module.exports = class INVALID_BUTTON_POSITION extends Rule {
     this._text = 'Блок button в блоке warning не может находиться перед блоком placeholder на том же или более глубоком уровне вложенности.';
     this._warnings = [];
     this.lint();
+    this.buttonCheck(this._warnings);
     return this._errors;
   }
 
-  lint() {
-    this._regex = new RegExp(`"block"\\s*:\\s*"(${this._blocks.join('|')})"`, 'g');
-    for (let n = 0; this._regex.test(this._json); n += 1) {
-      this.check();
+  check() {
+    const loc = this.findBrackets();
+    const locParent = this.findBrackets(loc.start - 1);
+    const blockParent = this.parseBlock(locParent);
+
+    if (blockParent.block === 'warning') {
+      this._warnings.push({
+        loc: locParent,
+        locPlaceholder: loc,
+      });
     }
-    this.buttonCheck(this._warnings);
   }
 
   buttonCheck() {
@@ -33,19 +39,6 @@ module.exports = class INVALID_BUTTON_POSITION extends Rule {
           break;
         }
       }
-    }
-  }
-
-  check() {
-    const loc = this.findBrackets();
-    const locParent = this.findBrackets(loc.start - 1);
-    const blockParent = this.parseBlock(locParent);
-
-    if (blockParent.block === 'warning') {
-      this._warnings.push({
-        loc: locParent,
-        locPlaceholder: loc,
-      });
     }
   }
 };
