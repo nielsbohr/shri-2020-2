@@ -10,8 +10,6 @@ module.exports = class Rule {
 
   /**
   * Проходим регуляркой по всем совпадениям, внутри совпадения реализуем логику правила.
-  * @param {object} loc локация блока, loc.start - начало файла, loc.end - конец файла.
-  * @returns {object} Объект JSON
   */
   lint() {
     this._regex = new RegExp(`"block"\\s*:\\s*"(${this._blocks.join('|')})"`, 'g');

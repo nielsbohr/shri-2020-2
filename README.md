@@ -20,3 +20,9 @@
   }
 };
 ```
+
+# ToDo
+
+* Exceptions
+* Docs
+* More tests
