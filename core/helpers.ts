@@ -1,60 +1,46 @@
-module.exports = class Rule {
-  /**
-  * Инициализация скелета правила
-  * @param {string} json JSON, как строка.
-  */
-  constructor(json) {
-    this._json = json;
-    this._errors = [];
-  }
+import { BlockLocation, Location, Index, LintError } from 'helpers';
 
-  /**
-  * Проходим регуляркой по всем совпадениям, внутри совпадения реализуем логику правила.
-  */
-  lint() {
-    this._regex = new RegExp(`"block"\\s*:\\s*"(${this._blocks.join('|')})"`, 'g');
-    for (let n = 0; this._regex.test(this._json); n += 1) {
-      this.check();
-    }
-  }
+export const helpers = {
 
   /**
   * Парсим блок в JSON от указанных индексов начала и конца
-  * @param {object} loc локация блока, loc.start - начало файла, loc.end - конец файла.
+  * @param {string} json JSON в виде строки.
+  * @param {oblect} loc локация блока, loc.start - начало файла, loc.end - конец файла.
   * @returns {object} Объект JSON
   */
-  parseBlock(loc) {
-    return JSON.parse(this._json.slice(loc.start, loc.end + 1));
-  }
+
+  parseBlock(json: string, loc: Index): object {
+    return JSON.parse(json.slice(loc.start, loc.end + 1));
+  },
 
   /**
   * Собираем локацию блока из двух индексов (начала и конца блока).
-  * @param {integer} index индекс файла, от которого начинаем поиск.
-  * @returns {object} Объект с ключами start и end
+  * @param {number} index индекс файла, от которого начинаем поиск.
+  * @returns {Index} Объект с ключами start и end
   */
 
-  findBrackets(index = this._regex.lastIndex) {
+  findBrackets(index: number): Index {
     return {
       start: this.findBracket(index, true),
       end: this.findBracket(index, false),
     };
-  }
+  },
 
   /**
   * Ищем начало/конец блока ( открывающую / закрывающую скобку текущего контекста ).
-  * @param {integer} index индекс файла, от которого начинаем поиск.
+  * @param {number} index индекс файла, от которого начинаем поиск.
   * @param {boolean} start ищем начало (true) или конец (false) блока.
-  * @returns {integer} индекс начала или конца, либо -1,
+  * @returns {number} индекс начала или конца, либо -1,
   * если контекст нарушен (значит JSON невалиден).
   */
 
-  findBracket(index, start) {
+  findBracket(json : string, index : number, start : boolean) : number {
     for (
       let i = index, depth = 1;
-      start ? i >= 0 : i < this._json.length;
+      start ? i >= 0 : i < json.length;
       start ? i -= 1 : i += 1
     ) {
-      switch (this._json[i]) {
+      switch (json[i]) {
         case start ? '}' : '{':
           depth += 1;
           break;
@@ -70,45 +56,54 @@ module.exports = class Rule {
     }
 
     return -1;
-  }
+  },
 
   /**
   * Добавление объекта ошибки в массив this._errors.
-  * @param {object} loc локация блока, loc.start - начало файла, loc.end - конец файла.
-  * @returns {undefined}
+  * @param {Index} loc локация блока, loc.start - начало файла, loc.end - конец файла.
+  * @param {string} code код ошибки.
+  * @param {string} error текст ошибки.
+  * @returns {LintError}
   */
-  addError(loc) {
+  createError(loc: Index, code: string, text: string): LintError {
     const info = this.getBlockInfo(loc);
-    this._errors.push({
-      code: this._code,
-      error: this._text,
-      location: {
-        start: {
-          column: info.start.column,
-          line: info.start.line,
+    const error : LintError = {
+        code: code,
+        error: text,
+        location: {
+          start: {
+            column: info.start.column,
+            line: info.start.line,
+          },
+          end: {
+            column: info.end.column,
+            line: info.end.line,
+          },
         },
-        end: {
-          column: info.end.column,
-          line: info.end.line,
-        },
-      },
-    });
-  }
+      };
+    return error;
+  },
 
   /**
   * Подсчет количества строк и столбцов от указанного индекса,
   * путем разделения знаком переноса строки.
-  * @param {object} loc локация блока, loc.start - начало файла, loc.end - конец файла.
-  * @returns {object} Объект с ключами start и end,
+  * @param {Index} loc локация блока, loc.start - начало файла, loc.end - конец файла.
+  * @returns {BlockLocation} Объект с ключами start и end,
   * в каждом ключе находится объект с ключами column и line.
   */
 
-  getBlockInfo(loc) {
+  getBlockInfo(json: string, loc: Index): BlockLocation {
     const lineBreakG = new RegExp('\\r\\n?|\\n|\\u2028|\\u2029', 'g');
+    let block: BlockLocation;
 
-    for (let line = 1, cur = 0, start = {}, end = {}, offset = loc.start; ;) {
+    for (let line = 1,
+        cur = 0, 
+        start: Location, 
+        end: Location, 
+        offset: number = loc.start; ;) 
+    {
       lineBreakG.lastIndex = cur;
-      const match = lineBreakG.exec(this._json);
+      const match = lineBreakG.exec(json);
       if (match && match.index < offset) {
         line += 1;
         cur = match.index + match[0].length;
@@ -120,7 +115,7 @@ module.exports = class Rule {
         end.column = offset - cur + 2;
         end.line = line;
 
-        return {
+        block =  {
           start: {
             column: start.column,
             line: start.line,
@@ -130,6 +125,8 @@ module.exports = class Rule {
             line: end.line,
           },
         };
+
+        return block;
       }
     }
   }
