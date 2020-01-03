@@ -1,6 +1,6 @@
 const fs = require('fs');
 const { deepEqual } = require('assert');
-const { lint } = require('../index');
+const { lint } = require('../out/index');
 
 const filename = 'invalid-button-size';
 const code = 'WARNING.INVALID_BUTTON_SIZE';

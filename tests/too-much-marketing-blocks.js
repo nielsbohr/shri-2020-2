@@ -1,6 +1,6 @@
 const fs = require('fs');
 const { deepEqual } = require('assert');
-const { lint } = require('../index');
+const { lint } = require('../out/index');
 
 const filename = 'too-much-marketing-blocks';
 const code = 'GRID.TOO_MUCH_MARKETING_BLOCKS';

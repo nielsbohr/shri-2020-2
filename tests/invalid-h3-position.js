@@ -1,6 +1,6 @@
 const fs = require('fs');
 const { deepEqual } = require('assert');
-const { lint } = require('../index');
+const { lint } = require('../out/index');
 
 const filename = 'invalid-h3-position';
 const code = 'TEXT.INVALID_H3_POSITION';
