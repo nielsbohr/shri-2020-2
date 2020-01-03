@@ -19,7 +19,9 @@ export function lint(linter: Linter): void {
     } else if (block.elemMods && block.elemMods['m-col']) {
       for (let i = 0; i < grid.length; i += 1) {
         if (loc.start > grid[i].loc.start && loc.end < grid[i].loc.end) {
-          if (!grid[i].hasOwnProperty('content')) { Object.defineProperty(grid[i], 'content', []); }
+          if (!grid[i].hasOwnProperty('content')) { 
+            grid[i].content = [];
+          }
           grid[i].content.push({
             columns: block.elemMods['m-col'],
             content: block.content,

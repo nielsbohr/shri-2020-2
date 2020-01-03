@@ -32,6 +32,8 @@ export class Linter {
     } catch (e) {
       if (e instanceof SyntaxError) { 
         throw new Error('JSON is not valid');
+      } else {
+        throw new Error(e);
       }
     }
     this._json = json;
@@ -48,7 +50,7 @@ export class Linter {
   
   /**
   * Парсим блок в JSON от указанных индексов начала и конца
-  * @param {oblect} loc локация блока, loc.start - начало файла, loc.end - конец файла.
+  * @param {BlockIndexes} loc локация блока, loc.start - начало файла, loc.end - конец файла.
   * @returns {object} Объект JSON
   */
 

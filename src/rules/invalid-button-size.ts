@@ -18,7 +18,6 @@ export function lint(linter: Linter): void {
       const locParent = linter.findBrackets(loc.start - 1);
       const blockParent = linter.parseBlock(locParent);
 
-      // поиск эталонного текста
       if (Array.isArray(blockParent.content) && blockParent.block === 'warning') {
         for (let i = 0, refSize; i < blockParent.content.length; i += 1) {
           if (blockParent.content[i].block === 'text' && blockParent.content[i].mods && blockParent.content[i].mods.size) {

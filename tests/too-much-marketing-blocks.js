@@ -12,6 +12,6 @@ const expected = [];
 
 describe(code, () => {
   it(error, () => {
-    // deepEqual(lint(json), expected);
+    deepEqual(lint(json), expected);
   });
 });

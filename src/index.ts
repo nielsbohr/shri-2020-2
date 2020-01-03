@@ -1,7 +1,7 @@
-import { Linter } from './Linter';
+import { Linter, LintError } from './Linter';
 import rules from './rules';
 
-export function lint(json: string) {
+export function lint(json: string): Array<LintError> | Error {
   if (typeof json !== 'string') { throw new Error('JSON is not string'); }
   const linter = new Linter(json);
 
