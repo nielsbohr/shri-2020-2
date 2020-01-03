@@ -1,6 +1,6 @@
 const fs = require('fs');
 const { throws } = require('assert');
-const { lint } = require('../out/index');
+require('../build/linter');
 
 const error = 'Невалидный JSON';
 const json = fs.readFileSync(`${__dirname}/jsons/notValid.json`, 'utf8');

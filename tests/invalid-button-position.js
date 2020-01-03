@@ -1,6 +1,6 @@
 const fs = require('fs');
 const { deepEqual } = require('assert');
-const { lint } = require('../out/index');
+require('../build/linter');
 
 const filename = 'invalid-button-position';
 const code = 'WARNING.INVALID_BUTTON_POSITION';

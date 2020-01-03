@@ -12,4 +12,10 @@ export function lint(json: string) {
   return linter.errors;
 }
 
-Object.defineProperty(global, 'lint', lint);
+let _global: any;
+if (typeof window === "undefined") {
+  _global = global;
+} else {
+  _global = window;
+}
+_global.lint = lint;

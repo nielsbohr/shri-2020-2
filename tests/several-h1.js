@@ -1,6 +1,6 @@
 const fs = require('fs');
 const { deepEqual } = require('assert');
-const { lint } = require('../out/index');
+require('../build/linter');
 
 const filename = 'several-h1';
 const code = 'TEXT.SEVERAL_H1';
