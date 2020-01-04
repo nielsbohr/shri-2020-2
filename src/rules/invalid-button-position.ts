@@ -1,37 +1,23 @@
-import { Linter } from '../Linter';
+import { Linter, Node } from '../Linter';
 
 const code: string = 'WARNING.INVALID_BUTTON_POSITION';
 const text: string = `Блок button в блоке warning не может находиться перед блоком placeholder на том же или более глубоком уровне вложенности.`; 
 
 export function lint(linter: Linter): void {
-  const warnings = [];
+  const placeholders: Array<Node> = linter.getNodesByBlock('placeholder');
+  const buttons: Array<Node> = linter.getNodesByBlock('button');
 
-  const regexPlaceholder = new RegExp('"block"\\s*:\\s*"placeholder"', 'g');
-  for (let n = 0; regexPlaceholder.test(linter.json); n += 1) {
-    const loc = linter.findBrackets(regexPlaceholder.lastIndex);
-    const locParent = linter.findBrackets(loc.start - 1);
-    const blockParent = linter.parseBlock(locParent);
+  placeholders.forEach((placeholder: Node) => {
+    const parentNode: Node = linter.getParent(placeholder);
 
-    if (blockParent.block === 'warning') {
-      warnings.push({
-        locParent,
-        locPlaceholder: loc,
-      });
-    }
-  }
-
-  const regexButton = new RegExp('"block"\\s*:\\s*"button"', 'g');
-  for (let n = 0; regexButton.test(linter.json); n += 1) {
-    const locButton = linter.findBrackets(regexButton.lastIndex);
-    for (let i = 0; i < warnings.length; i += 1) {
-      if (
-        locButton.start > warnings[i].locParent.start
-          && locButton.end < warnings[i].locParent.end
-          && locButton.end < warnings[i].locPlaceholder.start
-      ) {
-        linter.addError(locButton, code, text);
-        break;
+    if (parentNode.node.block === 'warning') {
+      for (let i = buttons.length - 1; i >= 0; i -= 1) {
+        if (linter.isParent(buttons[i], parentNode) 
+        && buttons[i].location.end < placeholder.location.start) {
+          linter.addError(buttons[i].location, code, text);
+          buttons.splice(i, 1);
+        }
       }
     }
-  }
+  });
 }

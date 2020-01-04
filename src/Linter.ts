@@ -1,10 +1,10 @@
 export interface LintError {
   code: string;
   error: string;
-  location: BlockLocation;
+  location: NodeLocation;
 }
 
-export interface BlockLocation {
+export interface NodeLocation {
   start: Location;
   end: Location;
 }
@@ -14,10 +14,19 @@ export interface Location {
   line: number;
 }
 
-export interface BlockIndexes {
+export interface NodeIndexes {
   start: number;
   end: number;
 }
+
+export interface Block {
+  block: string;
+}
+
+export interface Node {
+  node: Block;
+  location: NodeIndexes;
+} 
 
 export class Linter {
   /**
@@ -50,21 +59,50 @@ export class Linter {
   
   /**
   * Парсим блок в JSON от указанных индексов начала и конца
-  * @param {BlockIndexes} loc локация блока, loc.start - начало файла, loc.end - конец файла.
+  * @param {NodeIndexes} loc локация блока, loc.start - начало файла, loc.end - конец файла.
   * @returns {object} Объект JSON
   */
 
-  parseBlock(loc: BlockIndexes): any {
+  parseBlock(loc: NodeIndexes): any {
     return JSON.parse(this.json.slice(loc.start, loc.end + 1));
+  }
+
+  getNodesByBlock(type: string, NodeLocation: string = this.json): any {
+    const nodes = [];
+    const regex = new RegExp(`"block"\\s*:\\s*"${type}"`, 'g');
+    for (let n = 0, location: NodeIndexes; regex.test(NodeLocation); n += 1) {
+      location = this.findBrackets(regex.lastIndex);
+      nodes.push(
+        {
+          node: this.parseBlock(location),
+          location
+        }
+      );
+    }
+
+    return nodes;
+  }
+
+  getParent(node: Node): Node {
+    const location = this.findBrackets(node.location.start - 1);
+
+    return {
+      node: this.parseBlock(location),
+      location
+    }
+  }
+
+  isParent(child: Node, parent: Node): boolean {
+    return child.location.start > parent.location.start && child.location.end < parent.location.end
   }
 
   /**
   * Собираем локацию блока из двух индексов (начала и конца блока).
   * @param {number} index индекс файла, от которого начинаем поиск.
-  * @returns {BlockIndexes} Объект с ключами start и end
+  * @returns {NodeIndexes} Объект с ключами start и end
   */
 
-  findBrackets(index: number): BlockIndexes {
+  findBrackets(index: number): NodeIndexes {
     return {
       start: this.findBracket(index, true),
       end: this.findBracket(index, false),
@@ -105,12 +143,12 @@ export class Linter {
 
   /**
   * Добавление объекта ошибки в массив this._errors.
-  * @param {BlockIndexes} loc локация блока, loc.start - начало файла, loc.end - конец файла.
+  * @param {NodeIndexes} loc локация блока, loc.start - начало файла, loc.end - конец файла.
   * @param {string} code код ошибки.
   * @param {string} error текст ошибки.
   * @returns {LintError}
   */
-  addError(loc: BlockIndexes, code: string, text: string): void {
+  addError(loc: NodeIndexes, code: string, text: string): void {
     const info = this.getBlockInfo(loc);
     const error : LintError = {
         code: code,
@@ -126,14 +164,14 @@ export class Linter {
   /**
   * Подсчет количества строк и столбцов от указанного индекса,
   * путем разделения знаком переноса строки.
-  * @param {BlockIndexes} loc локация блока, loc.start - начало файла, loc.end - конец файла.
-  * @returns {BlockLocation} Объект с ключами start и end,
+  * @param {NodeIndexes} loc локация блока, loc.start - начало файла, loc.end - конец файла.
+  * @returns {NodeLocation} Объект с ключами start и end,
   * в каждом ключе находится объект с ключами column и line.
   */
 
-  getBlockInfo(loc: BlockIndexes): BlockLocation {
+  getBlockInfo(loc: NodeIndexes): NodeLocation {
     const lineBreakG = new RegExp('\\r\\n?|\\n|\\u2028|\\u2029', 'g');
-    let block: BlockLocation;
+    let block: NodeLocation;
 
     for (let line = 1,
         cur = 0, 

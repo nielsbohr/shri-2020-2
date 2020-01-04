@@ -13,12 +13,12 @@ const expected = [
     error,
     location: {
       end: {
-        column: 18,
-        line: 12,
+        column: 26,
+        line: 27,
       },
       start: {
-        column: 17,
-        line: 7,
+        column: 25,
+        line: 22,
       },
     },
   },
@@ -41,12 +41,12 @@ const expected = [
     error,
     location: {
       end: {
-        column: 26,
-        line: 27,
+        column: 18,
+        line: 12,
       },
       start: {
-        column: 25,
-        line: 22,
+        column: 17,
+        line: 7,
       },
     },
   },

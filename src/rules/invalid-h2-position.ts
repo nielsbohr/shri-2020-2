@@ -1,10 +1,10 @@
-import { Linter, BlockIndexes } from "../Linter";
+import { Linter, NodeIndexes } from "../Linter";
 
 const code: string = 'TEXT.INVALID_H2_POSITION';
 const text: string = 'Заголовок второго уровня (блок text с модификатором type h2) не может находиться перед заголовком первого уровня на том же или более глубоком уровне вложенности.';
 
 export function lint(linter: Linter): void {
-  let scope: Array<BlockIndexes> = [];
+  let scope: Array<NodeIndexes> = [];
   const regexText = new RegExp('"block"\\s*:\\s*"text"', 'g');
 
   for (let n = 0; regexText.test(linter.json); n += 1) {
@@ -12,7 +12,7 @@ export function lint(linter: Linter): void {
     const block = linter.parseBlock(loc);
 
     if (block && block.mods && block.mods.type === 'h1') {
-      scope.forEach((locH2: BlockIndexes) => {
+      scope.forEach((locH2: NodeIndexes) => {
         linter.addError(locH2, code, text);
       });
       scope = [];
