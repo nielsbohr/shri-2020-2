@@ -1,4 +1,5 @@
-import { Linter, LintError } from './Linter';
+import { Linter } from './Linter';
+import { LintError } from './types';
 import rules from './rules';
 
 export function lint(json: string): Array<LintError> | Error {

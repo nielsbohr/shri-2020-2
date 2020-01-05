@@ -1,32 +1,4 @@
-export interface LintError {
-  code: string;
-  error: string;
-  location: NodeLocation;
-}
-
-export interface NodeLocation {
-  start: Location;
-  end: Location;
-}
-
-export interface Location {
-  column: number;
-  line: number;
-}
-
-export interface NodeIndexes {
-  start: number;
-  end: number;
-}
-
-export interface Block {
-  block: string;
-}
-
-export interface Node {
-  node: Block;
-  location: NodeIndexes;
-} 
+import { LintError, NodeIndexes, Node, NodeLocation, Location } from './types';
 
 export class Linter {
   /**
@@ -62,12 +34,18 @@ export class Linter {
   * @param {NodeIndexes} loc локация блока, loc.start - начало файла, loc.end - конец файла.
   * @returns {object} Объект JSON
   */
-
   parseBlock(loc: NodeIndexes): any {
     return JSON.parse(this.json.slice(loc.start, loc.end + 1));
   }
 
-  getNodesByBlock(type: string, NodeLocation: string = this.json): any {
+  
+  /**
+  * Получения всех нод по типу блока
+  * @param {string} type тип блока
+  * @param {string} NodeLocation сабстрока, по дефолту весь JSON
+  * @returns {Array<any>}
+  */
+  getNodesByBlock(type: string, NodeLocation: string = this.json): Array<any> {
     const nodes = [];
     const regex = new RegExp(`"block"\\s*:\\s*"${type}"`, 'g');
     for (let n = 0, location: NodeIndexes; regex.test(NodeLocation); n += 1) {
@@ -83,8 +61,14 @@ export class Linter {
     return nodes;
   }
 
-  getParent(node: Node): Node {
-    const location = this.findBrackets(node.location.start - 1);
+  
+  /**
+  * Получения ноды родителя
+  * @param {Node} child нода
+  * @returns {Node} нода-родитель
+  */
+  getParent(child: Node): Node {
+    const location = this.findBrackets(child.location.start - 1);
 
     return {
       node: this.parseBlock(location),
@@ -92,8 +76,25 @@ export class Linter {
     }
   }
 
-  isParent(child: Node, parent: Node): boolean {
+  /**
+  * Находится ли нода внутри уровня и подуровней ноды родителя
+  * @param {Node} child нода-ребенок
+  * @param {Node} parent нода-родитель
+  * @returns {boolean}
+  */
+  inScope(child: Node, parent: Node): boolean {
     return child.location.start > parent.location.start && child.location.end < parent.location.end
+  }
+
+  /**
+  * Является ли нода строго родителем другой ноды (является ли частью content)
+  * @param {Node} child нода-ребенок
+  * @param {Node} parent нода-родитель
+  * @returns {boolean}
+  */
+  isParent(child: Node, parent: Node): boolean {
+    return this.getParent(child).location.start === parent.location.start &&
+      this.getParent(child).location.end === parent.location.end;
   }
 
   /**
@@ -101,7 +102,6 @@ export class Linter {
   * @param {number} index индекс файла, от которого начинаем поиск.
   * @returns {NodeIndexes} Объект с ключами start и end
   */
-
   findBrackets(index: number): NodeIndexes {
     return {
       start: this.findBracket(index, true),
@@ -116,7 +116,6 @@ export class Linter {
   * @returns {number} индекс начала или конца, либо -1,
   * если контекст нарушен (значит JSON невалиден).
   */
-
   findBracket(index : number, start : boolean) : number {
     for (
       let i = index, depth = 1;
@@ -168,7 +167,6 @@ export class Linter {
   * @returns {NodeLocation} Объект с ключами start и end,
   * в каждом ключе находится объект с ключами column и line.
   */
-
   getBlockInfo(loc: NodeIndexes): NodeLocation {
     const lineBreakG = new RegExp('\\r\\n?|\\n|\\u2028|\\u2029', 'g');
     let block: NodeLocation;

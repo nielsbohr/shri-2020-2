@@ -1,20 +1,19 @@
 import { Linter } from "../Linter";
+import { Node } from '../types';
 
 const code: string = 'WARNING.INVALID_PLACEHOLDER_SIZE';
 const text: string = 'Допустимые размеры для блока placeholder в блоке warning (значение модификатора size): s, m, l.';
 const sizes: Array<string> = ['s', 'm', 'l'];
 
 export function lint(linter: Linter): void {
-  const regexPlaceholder = new RegExp('"block"\\s*:\\s*"placeholder"', 'g');
-  for (let n = 0; regexPlaceholder.test(linter.json); n += 1) {
-    const loc = linter.findBrackets(regexPlaceholder.lastIndex);
-    const block = linter.parseBlock(loc);
+  const placeholders = linter.getNodesByBlock('placeholder');
 
-    if (block.mods && block.mods.size) {
-      const locParent = linter.findBrackets(loc.start - 1);
-      const blockParent = linter.parseBlock(locParent);
-
-      if (blockParent.block === 'warning' && !sizes.includes(block.mods.size)) { linter.addError(loc, code, text); }
+  placeholders.forEach((placeholder: Node) => {
+    const parentNode = linter.getParent(placeholder);
+    if (placeholder.node.mods && placeholder.node.mods.size) {
+      if (parentNode.node.block === 'warning' && !sizes.includes(placeholder.node.mods.size)) {
+        linter.addError(placeholder.location, code, text); 
+      }
     }
-  }
+  });
 }

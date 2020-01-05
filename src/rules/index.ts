@@ -6,7 +6,7 @@ const rules = [
   () => require('./several-h1'),
   () => require('./text-sizes-should-be-equal'),
   () => require('./invalid-placeholder-size'),
-  // () => require('./too-much-marketing-blocks')
+  () => require('./too-much-marketing-blocks')
 ];
 
 export default rules;

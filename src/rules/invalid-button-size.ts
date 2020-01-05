@@ -1,33 +1,42 @@
 import { Linter } from '../Linter';
+import { Node, Warning } from '../types';
 
 const code: string = 'WARNING.INVALID_BUTTON_SIZE';
-const text: string = 'Размер кнопки блока warning должен быть на 1 шаг больше эталонного.';
+const message: string = 'Размер кнопки блока warning должен быть на 1 шаг больше эталонного.';
 const sizes: Array<string> = ['xxs', 'xs', 's', 'm', 'l', 'xl', 'xxl', 'xxxl', 'xxxxl', 'xxxxxl'];
 
 export function lint(linter: Linter): void {
-  const regexButton = new RegExp('"block"\\s*:\\s*"button"', 'g');
+  const texts: Array<Node> = linter.getNodesByBlock('text');
+  const buttons: Array<Node> = linter.getNodesByBlock('button');
+  const warnings: Array<Warning> = linter.getNodesByBlock('warning');
   
-  for (let n = 0; regexButton.test(linter.json); n += 1) {
-    const loc = linter.findBrackets(regexButton.lastIndex);
-    const block = linter.parseBlock(loc);
-    let size;
+  for (let i = 0; i < warnings.length; i++) {
+    const warning = warnings[i];
+    for (let j = 0; j < texts.length; j++) {
+      const text = texts[j];
+      if (
+        text.node && 
+        text.node.mods && 
+        text.node.mods.size &&
+        linter.isParent(text, warning)
+      ) {
+        warning.text = text.node.mods.size;
+        break;
+      }
+    }
 
-    if (block.mods && block.mods.size) {
-      size = block.mods.size;
+    if (!warning.text) continue;
 
-      const locParent = linter.findBrackets(loc.start - 1);
-      const blockParent = linter.parseBlock(locParent);
-
-      if (Array.isArray(blockParent.content) && blockParent.block === 'warning') {
-        for (let i = 0, refSize; i < blockParent.content.length; i += 1) {
-          if (blockParent.content[i].block === 'text' && blockParent.content[i].mods && blockParent.content[i].mods.size) {
-            refSize = sizes[sizes.indexOf(blockParent.content[i].mods.size) + 1];
-            if (size !== refSize) {
-              linter.addError(loc, code, text);
-              break;
-            }
-          }
-        }
+    for (let j = 0; j < buttons.length; j++) {
+      const button = buttons[j];
+      if (
+        button.node && 
+        button.node.mods && 
+        button.node.mods.size &&
+        linter.isParent(button, warning) &&
+        warning.text !== sizes[sizes.indexOf(button.node.mods.size) - 1]
+      ) {
+        linter.addError(button.location, code, message);
       }
     }
   }

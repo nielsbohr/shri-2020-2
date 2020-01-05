@@ -1,23 +1,18 @@
-import { Linter, NodeIndexes } from "../Linter";
+import { Linter } from "../Linter";
+import { Node } from '../types';
 
 const code: string = 'TEXT.INVALID_H2_POSITION';
 const text: string = 'Заголовок второго уровня (блок text с модификатором type h2) не может находиться перед заголовком первого уровня на том же или более глубоком уровне вложенности.';
 
 export function lint(linter: Linter): void {
-  let scope: Array<NodeIndexes> = [];
-  const regexText = new RegExp('"block"\\s*:\\s*"text"', 'g');
-
-  for (let n = 0; regexText.test(linter.json); n += 1) {
-    const loc = linter.findBrackets(regexText.lastIndex);
-    const block = linter.parseBlock(loc);
-
-    if (block && block.mods && block.mods.type === 'h1') {
-      scope.forEach((locH2: NodeIndexes) => {
-        linter.addError(locH2, code, text);
-      });
-      scope = [];
-    } else if (block && block.mods && block.mods.type === 'h2') {
-      scope.push(loc);
-    }
+  const nodes = linter.getNodesByBlock('text');
+  const allH1 = nodes.filter((node: Node) => node.node && node.node.mods && node.node.mods.type === 'h1');
+  const allH2 = nodes.filter((node: Node) => node.node && node.node.mods && node.node.mods.type === 'h2');
+  let h1: Node;
+  if (allH1.length) {
+    h1 = allH1[0];
+    allH2.forEach((node: Node) => {
+      if (node.location.end < h1.location.start) linter.addError(node.location, code, text);
+    });
   }
 }

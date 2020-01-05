@@ -1,4 +1,5 @@
-import { Linter, Node } from '../Linter';
+import { Linter } from '../Linter';
+import { Node } from '../types';
 
 const code: string = 'WARNING.INVALID_BUTTON_POSITION';
 const text: string = `Блок button в блоке warning не может находиться перед блоком placeholder на том же или более глубоком уровне вложенности.`; 
@@ -12,7 +13,7 @@ export function lint(linter: Linter): void {
 
     if (parentNode.node.block === 'warning') {
       for (let i = buttons.length - 1; i >= 0; i -= 1) {
-        if (linter.isParent(buttons[i], parentNode) 
+        if (linter.inScope(buttons[i], parentNode) 
         && buttons[i].location.end < placeholder.location.start) {
           linter.addError(buttons[i].location, code, text);
           buttons.splice(i, 1);
