@@ -73,7 +73,7 @@ export class Linter {
     return {
       node: this.parseBlock(location),
       location
-    }
+    };
   }
 
   /**
@@ -83,7 +83,7 @@ export class Linter {
   * @returns {boolean}
   */
   inScope(child: Node, parent: Node): boolean {
-    return child.location.start > parent.location.start && child.location.end < parent.location.end
+    return child.location.start > parent.location.start && child.location.end < parent.location.end;
   }
 
   /**

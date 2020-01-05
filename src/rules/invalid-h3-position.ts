@@ -12,7 +12,7 @@ export function lint(linter: Linter): void {
   if (allH2.length) {
     h2 = allH2[0];
     allH3.forEach((node: Node) => {
-      if (node.location.end < h2.location.start) linter.addError(node.location, code, text);
+      if (node.location.end < h2.location.start) { linter.addError(node.location, code, text); }
     });
   }
 }

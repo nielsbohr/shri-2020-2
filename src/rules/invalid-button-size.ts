@@ -25,7 +25,7 @@ export function lint(linter: Linter): void {
       }
     }
 
-    if (!warning.text) continue;
+    if (!warning.text) { continue; }
 
     for (let j = 0; j < buttons.length; j++) {
       const button = buttons[j];

@@ -9,10 +9,10 @@ export function lint(linter: Linter): void {
 
   const allGrids: Array<Grid> = linter.getNodesByBlock('grid');
   const grids: Array<Grid> = allGrids.filter((grid: Grid) => {
-    return grid.node && grid.node.mods && grid.node.mods['m-columns']
+    return grid.node && grid.node.mods && grid.node.mods['m-columns'];
   });
   const fractions: Array<Grid> = allGrids.filter((fraction: Grid) => {
-    return fraction.node && fraction.node.elemMods && fraction.node.elemMods['m-col']
+    return fraction.node && fraction.node.elemMods && fraction.node.elemMods['m-col'];
   });
 
   for (let i = 0; i < grids.length; i++) {
