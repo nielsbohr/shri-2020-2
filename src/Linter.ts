@@ -2,7 +2,7 @@ import { LintError, NodeIndexes, Node, NodeLocation, Location } from './types';
 
 export class Linter {
   /**
-  * Инициализация скелета правила
+  * Инициализация линтера
   * @param {string} json JSON, как строка.
   */
   _json: string;
@@ -35,14 +35,19 @@ export class Linter {
   * @returns {object} Объект JSON
   */
   parseBlock(loc: NodeIndexes): any {
-    return JSON.parse(this.json.slice(loc.start, loc.end + 1));
+    try {
+      const json = JSON.parse(this.json.slice(loc.start, loc.end + 1));
+      return json; 
+    } catch(e) {
+      throw new Error('JSON parser throwed error');
+    }
   }
 
   
   /**
   * Получения всех нод по типу блока
   * @param {string} type тип блока
-  * @param {string} NodeLocation сабстрока, по дефолту весь JSON
+  * @param {string} NodeLocation субстрока, по дефолту весь JSON
   * @returns {Array<any>}
   */
   getNodesByBlock(type: string, NodeLocation: string = this.json): Array<any> {
@@ -79,7 +84,7 @@ export class Linter {
   /**
   * Находится ли нода внутри уровня и подуровней ноды родителя
   * @param {Node} child нода-ребенок
-  * @param {Node} parent нода-родитель
+  * @param {Node} parent нода-родитель (не обязательно на 1 уровень выше, может и на 2, 3 и т.д.)
   * @returns {boolean}
   */
   inScope(child: Node, parent: Node): boolean {
@@ -87,7 +92,8 @@ export class Linter {
   }
 
   /**
-  * Является ли нода строго родителем другой ноды (является ли частью content)
+  * Является ли нода строго родителем другой ноды
+  * (является ли ребенок частью content родителя)
   * @param {Node} child нода-ребенок
   * @param {Node} parent нода-родитель
   * @returns {boolean}
@@ -137,7 +143,7 @@ export class Linter {
       }
     }
 
-    return -1;
+    throw new Error('Can\'t find location offset');
   }
 
   /**

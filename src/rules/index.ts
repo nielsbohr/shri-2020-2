@@ -1,3 +1,5 @@
+/* Выгрузка всех правил линтинга */
+
 const rules = [ 
   () => require('./invalid-button-position'),
   () => require('./invalid-button-size'),

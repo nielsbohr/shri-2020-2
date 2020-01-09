@@ -10,7 +10,7 @@ export function lint(linter: Linter): void {
 
   placeholders.forEach((placeholder: Node) => {
     const parentNode = linter.getParent(placeholder);
-    if (placeholder.node.mods && placeholder.node.mods.size) {
+    if (placeholder.node && placeholder.node.mods && placeholder.node.mods.size) {
       if (parentNode.node.block === 'warning' && !sizes.includes(placeholder.node.mods.size)) {
         linter.addError(placeholder.location, code, text); 
       }

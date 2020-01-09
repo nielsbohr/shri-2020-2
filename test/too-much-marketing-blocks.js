@@ -1,4 +1,10 @@
-{
+const { expect } = require('chai');
+require('../build/linter');
+
+const code = 'GRID.TOO_MUCH_MARKETING_BLOCKS';
+const error = 'Маркетинговые блоки занимают больше половины от всех колонок блока grid.';
+
+const json = `{
     "block": "grid",
     "mods": {
         "m-columns": "10"
@@ -29,4 +35,27 @@
             ]
         }
     ]
-}
+}`;
+const expected = [
+  {
+    code,
+    error,
+    location: {
+      end: {
+        column: 2,
+        line: 32,
+      },
+      start: {
+        column: 1,
+        line: 1,
+      },
+    },
+  },
+];
+
+
+describe(code, () => {
+  it(error, () => {
+    expect(global.lint(json)).to.deep.include.members(expected);
+  });
+});
