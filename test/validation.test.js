@@ -5,7 +5,7 @@ const json = `{
   "valid?" : "NOPE""
 }`;
 
-describe('Невалидный JSON', () => {
+describe('Invalid JSON', () => {
   it('', () => {
     throws(() => global.lint(json), Error, 'JSON is not valid');
   });

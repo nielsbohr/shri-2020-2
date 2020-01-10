@@ -1,4 +1,4 @@
-/* Выгрузка всех правил линтинга */
+/* Импорт всех правил линтинга */
 
 const rules = [ 
   () => require('./invalid-button-position'),

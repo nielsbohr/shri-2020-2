@@ -5,6 +5,11 @@ const code: string = 'WARNING.INVALID_BUTTON_SIZE';
 const message: string = 'Размер кнопки блока warning должен быть на 1 шаг больше эталонного.';
 const sizes: Array<string> = ['xxs', 'xs', 's', 'm', 'l', 'xl', 'xxl', 'xxxl', 'xxxxl', 'xxxxxl'];
 
+/**
+  * Cначала ищем эталонный текст блока warning, проходим по нодам блока текст и
+  * ищем первый найденный, который является ребенком блока warning и у которого есть размер.
+  * Далее проходим по кнопкам и ищем несовпадения по размеру.
+  */
 export function lint(linter: Linter): void {
   const texts: Array<Node> = linter.getNodesByBlock('text');
   const buttons: Array<Node> = linter.getNodesByBlock('button');
@@ -15,7 +20,6 @@ export function lint(linter: Linter): void {
     for (let j = 0; j < texts.length; j++) {
       const text = texts[j];
       if (
-        text.node && 
         text.node.mods && 
         text.node.mods.size &&
         linter.isParent(text, warning)
@@ -30,7 +34,6 @@ export function lint(linter: Linter): void {
     for (let j = 0; j < buttons.length; j++) {
       const button = buttons[j];
       if (
-        button.node && 
         button.node.mods && 
         button.node.mods.size &&
         linter.isParent(button, warning) &&

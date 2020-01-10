@@ -45,7 +45,7 @@ const data = [
       },
     ],
     length: 1,
-    message: 'ошибка. текст до кнопки',
+    message: '1 fail. Text before button',
   }, {
     json: `{
       "block": "page",
@@ -86,7 +86,7 @@ const data = [
       },
     ],
     length: 1,
-    message: 'ошибка. текст после кнопки',
+    message: '1 fail, text after button',
   }, {
     json: `{
       "block": "page",
@@ -118,7 +118,7 @@ const data = [
     }`,
     expected: [],
     length: 1,
-    message: 'Не ошибка. Два текста перед кнопкой',
+    message: 'Not errors, 2 texts before button',
   },
 ];
 

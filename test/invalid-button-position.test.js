@@ -83,7 +83,7 @@ const data = [
       },
     ],
     length: 2,
-    message: 'warning вложенный в warning',
+    message: '2 fails, warning inside warning',
   },
   {
     json: `{
@@ -132,7 +132,7 @@ const data = [
       },
     ],
     length: 1,
-    message: '1 button впереди placeholder',
+    message: '1 button before placeholder',
   },
   {
     json: `{
@@ -166,7 +166,7 @@ const data = [
 }`,
     expected: [],
     length: 0,
-    message: 'без ошибок',
+    message: 'without case errors',
   },
   {
     json: `{
@@ -200,7 +200,7 @@ const data = [
 }`,
     expected: [],
     length: 0,
-    message: 'блок не warning',
+    message: 'block is not warning (payment)',
   },
   {
     json: `{
@@ -254,7 +254,7 @@ const data = [
       },
     ],
     length: 1,
-    message: 'button вне warning + ошибочный button',
+    message: 'wrong button + 1 button is outside warning block',
   },
 ];
 

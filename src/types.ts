@@ -1,3 +1,5 @@
+// Используемые ts типы
+
 export interface LintError {
     code: string;
     error: string;
@@ -20,10 +22,10 @@ export interface NodeIndexes {
 }
 
 export interface Block {
-    block: string;
-    content: any;
-    mods: any;
-    elemMods: any;
+    block?: string;
+    content?: any;
+    mods?: any;
+    elemMods?: any;
 }
 
 export interface Node {

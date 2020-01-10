@@ -40,7 +40,7 @@ const data = [
       },
     ],
     length: 1,
-    message: 'Типичная ошибка',
+    message: 'H3, H2',
   },
   {
     json: `{
@@ -83,7 +83,7 @@ const data = [
       },
     ],
     length: 1,
-    message: 'ошибка + h3 после h2',
+    message: 'H3, H2, H3',
   },
   {
     json: `{
@@ -111,7 +111,7 @@ const data = [
   }`,
     expected: [],
     length: 0,
-    message: 'Без ошибок',
+    message: 'H2, H3, H3',
   },
 ];
 
