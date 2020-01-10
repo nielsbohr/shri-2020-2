@@ -1,6 +1,3 @@
-const { expect } = require('chai');
-require('../build/linter');
-
 const code = 'TEXT.INVALID_H2_POSITION';
 const error = 'Заголовок второго уровня (блок text с модификатором type h2) не может находиться перед заголовком первого уровня на том же или более глубоком уровне вложенности.';
 
@@ -115,12 +112,8 @@ const data = [
   },
 ];
 
-describe(code, () => {
-  data.forEach((testCase) => {
-    it(testCase.message, () => {
-      const errors = global.lint(testCase.json);
-      expect(errors).to.deep.include.members(testCase.expected);
-      expect(errors).to.have.length(testCase.length);
-    });
-  });
-});
+module.exports = {
+  code,
+  error,
+  data,
+};

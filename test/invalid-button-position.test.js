@@ -1,6 +1,3 @@
-const { expect } = require('chai');
-require('../build/linter');
-
 const code = 'WARNING.INVALID_BUTTON_POSITION';
 const error = 'Блок button в блоке warning не может находиться перед блоком placeholder на том же или более глубоком уровне вложенности.';
 
@@ -83,7 +80,7 @@ const data = [
       },
     ],
     length: 2,
-    message: '2 fails, warning inside warning',
+    message: 'Warning with incorrect button inside warning with incorrect button',
   },
   {
     json: `{
@@ -132,7 +129,7 @@ const data = [
       },
     ],
     length: 1,
-    message: '1 button before placeholder',
+    message: '1 incorrect button',
   },
   {
     json: `{
@@ -166,7 +163,7 @@ const data = [
 }`,
     expected: [],
     length: 0,
-    message: 'without case errors',
+    message: 'Correct case. All buttons after placeholder',
   },
   {
     json: `{
@@ -200,7 +197,7 @@ const data = [
 }`,
     expected: [],
     length: 0,
-    message: 'block is not warning (payment)',
+    message: 'Incorrect button, but block is not warning (payment)',
   },
   {
     json: `{
@@ -254,16 +251,53 @@ const data = [
       },
     ],
     length: 1,
-    message: 'wrong button + 1 button is outside warning block',
+    message: 'Incorrect button + 1 button outside warning block',
+  },
+  {
+    json: `{
+    "block": "warning",
+    "content": [
+        {
+            "block": "history",
+            "content": [
+              {
+                "block": "payment",
+                "content": [
+                  {
+                    "block": "button"
+                  }
+                ]
+              }
+            ]
+        },
+        {
+            "block": "placeholder"
+        }
+    ]
+}`,
+    expected: [
+      {
+        code,
+        error,
+        location: {
+          end: {
+            column: 20,
+            line: 12,
+          },
+          start: {
+            column: 19,
+            line: 10,
+          },
+        },
+      },
+    ],
+    length: 1,
+    message: 'Incorrect Button. It is 2 level nesting',
   },
 ];
 
-describe(code, () => {
-  data.forEach((testCase) => {
-    it(testCase.message, () => {
-      const errors = global.lint(testCase.json);
-      expect(errors).to.deep.include.members(testCase.expected);
-      expect(errors).to.have.length(testCase.length);
-    });
-  });
-});
+module.exports = {
+  code,
+  error,
+  data,
+};

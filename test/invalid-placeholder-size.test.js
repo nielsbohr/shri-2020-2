@@ -1,6 +1,3 @@
-const { expect } = require('chai');
-require('../build/linter');
-
 const code = 'WARNING.INVALID_PLACEHOLDER_SIZE';
 const error = 'Допустимые размеры для блока placeholder в блоке warning (значение модификатора size): s, m, l.';
 
@@ -56,9 +53,6 @@ const data = [
                       "mods": {
                           "size": "m"
                       }
-                  },
-                  {
-                      "block": "placeholder"
                   }
               ]
           }
@@ -80,9 +74,6 @@ const data = [
                       "mods": {
                           "size": "s"
                       }
-                  },
-                  {
-                      "block": "placeholder"
                   }
               ]
           }
@@ -104,9 +95,6 @@ const data = [
                       "mods": {
                           "size": "l"
                       }
-                  },
-                  {
-                      "block": "placeholder"
                   }
               ]
           }
@@ -116,15 +104,39 @@ const data = [
     length: 0,
     message: 'Placeholder L size',
   },
+  {
+    json: `{
+      "block": "warning",
+      "content": [
+          {
+              "block": "placeholder"
+          }
+      ]     
+  }`,
+    expected: [],
+    length: 0,
+    message: 'Placeholder without size',
+  },
+  {
+    json: `{
+      "block": "payment",
+      "content": [
+          {
+            "block": "placeholder",
+            "mods": {
+              "size": "xs"
+            }
+          }
+      ]     
+  }`,
+    expected: [],
+    length: 0,
+    message: 'Incorrect placeholder, but parent is not warning',
+  },
 ];
 
-
-describe(code, () => {
-  data.forEach((testCase) => {
-    it(testCase.message, () => {
-      const errors = global.lint(testCase.json);
-      expect(errors).to.deep.include.members(testCase.expected);
-      expect(errors).to.have.length(testCase.length);
-    });
-  });
-});
+module.exports = {
+  code,
+  error,
+  data,
+};

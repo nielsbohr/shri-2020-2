@@ -1,6 +1,3 @@
-const { expect } = require('chai');
-require('../build/linter');
-
 const code = 'GRID.TOO_MUCH_MARKETING_BLOCKS';
 const error = 'Маркетинговые блоки занимают больше половины от всех колонок блока grid.';
 
@@ -148,13 +145,8 @@ const data = [
   },
 ];
 
-
-describe(code, () => {
-  data.forEach((testCase) => {
-    it(testCase.message, () => {
-      const errors = global.lint(testCase.json);
-      expect(errors).to.deep.include.members(testCase.expected);
-      expect(errors).to.have.length(testCase.length);
-    });
-  });
-});
+module.exports = {
+  code,
+  error,
+  data,
+};

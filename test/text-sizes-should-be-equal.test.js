@@ -1,6 +1,3 @@
-const { expect } = require('chai');
-require('../build/linter');
-
 const code = 'WARNING.TEXT_SIZES_SHOULD_BE_EQUAL';
 const error = 'Блок Warning содержит тексты разных размеров.';
 
@@ -338,12 +335,8 @@ const data = [
   },
 ];
 
-describe(code, () => {
-  data.forEach((testCase) => {
-    it(testCase.message, () => {
-      const errors = global.lint(testCase.json);
-      expect(errors).to.deep.include.members(testCase.expected);
-      expect(errors).to.have.length(testCase.length);
-    });
-  });
-});
+module.exports = {
+  code,
+  error,
+  data,
+};

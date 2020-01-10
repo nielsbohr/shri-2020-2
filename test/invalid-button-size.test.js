@@ -1,6 +1,3 @@
-const { expect } = require('chai');
-require('../build/linter');
-
 const code = 'WARNING.INVALID_BUTTON_SIZE';
 const error = 'Размер кнопки блока warning должен быть на 1 шаг больше эталонного.';
 
@@ -45,7 +42,7 @@ const data = [
       },
     ],
     length: 1,
-    message: '1 fail. Text before button',
+    message: 'Incorrect button. Button is after Text',
   }, {
     json: `{
       "block": "page",
@@ -86,7 +83,7 @@ const data = [
       },
     ],
     length: 1,
-    message: '1 fail, text after button',
+    message: 'Incorrect button. Button is before text',
   }, {
     json: `{
       "block": "page",
@@ -101,12 +98,6 @@ const data = [
                     }
                   },
                   {
-                    "block": "text",
-                    "mods": {
-                        "size": "xl"
-                    }
-                  },
-                  {
                       "block": "button",
                       "mods": {
                           "size": "xl"
@@ -117,17 +108,65 @@ const data = [
       ]
     }`,
     expected: [],
-    length: 1,
-    message: 'Not errors, 2 texts before button',
+    length: 0,
+    message: 'Correct case. Button size is one more than Text size. Button is after Text',
+  }, {
+    json: `{
+      "block": "page",
+      "content": [
+          {
+              "block": "warning",
+              "content": [
+                  {
+                    "block": "button",
+                    "mods": {
+                        "size": "xl"
+                    }
+                  },
+                  {
+                    "block": "text",
+                    "mods": {
+                        "size": "l"
+                    }
+                  }
+              ]
+          }
+      ]
+    }`,
+    expected: [],
+    length: 0,
+    message: 'Correct case. Button size is one more than Text size. Button is before Text',
+  }, {
+    json: `{
+      "block": "page",
+      "content": [
+          {
+              "block": "payment",
+              "content": [
+                  {
+                    "block": "button",
+                    "mods": {
+                        "size": "l"
+                    }
+                  },
+                  {
+                    "block": "text",
+                    "mods": {
+                        "size": "l"
+                    }
+                  }
+              ]
+          }
+      ]
+    }`,
+    expected: [],
+    length: 0,
+    message: 'Correct case. Button size is incorrect, but parent is not warning(payment). Button is before Text',
   },
 ];
 
-describe(code, () => {
-  data.forEach((testCase) => {
-    it(testCase.message, () => {
-      const errors = global.lint(testCase.json);
-      expect(errors).to.deep.include.members(testCase.expected);
-      expect(errors).to.have.length(testCase.length);
-    });
-  });
-});
+module.exports = {
+  code,
+  error,
+  data,
+};

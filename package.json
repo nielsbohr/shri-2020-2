@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "2 test task for SHRI 2020",
   "scripts": {
-    "test": "mocha -w",
+    "test": "mocha test.js -w",
     "dev": "npx webpack",
     "devtest": "webpack-dev-server --config webpack.test.js",
     "lint": "npx eslint **/*.js --fix && npx tslint ./src/**/*.ts --fix"

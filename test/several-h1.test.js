@@ -1,6 +1,3 @@
-const { expect } = require('chai');
-require('../build/linter');
-
 const code = 'TEXT.SEVERAL_H1';
 const error = 'Заголовок первого уровня (блок text с модификатором type h1) на странице должен быть единственным.';
 
@@ -92,13 +89,8 @@ const data = [
   },
 ];
 
-
-describe(code, () => {
-  data.forEach((testCase) => {
-    it(testCase.message, () => {
-      const errors = global.lint(testCase.json);
-      expect(errors).to.deep.include.members(testCase.expected);
-      expect(errors).to.have.length(testCase.length);
-    });
-  });
-});
+module.exports = {
+  code,
+  error,
+  data,
+};

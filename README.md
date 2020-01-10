@@ -20,3 +20,9 @@ export function lint(linter: Linter): void {
   ...
 }
 ```
+
+## Команды
+
+`npm run dev` - Сборка бандла с включенной опцией watch \
+`npm test` - Прогон тестов через Node.js \
+`npm run devtest` - Прогон тестов через браузер
