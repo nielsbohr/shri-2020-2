@@ -44,21 +44,27 @@ const data = [
       "block": "page",
       "content": [
           {
-              "block": "text",
-              "mods": {
-                  "type": "h3"
-              }
+            "block": "text",
+            "mods": {
+                "type": "h3"
+            }
           },
           {
-              "block": "text",
-              "mods": {
-                  "type": "h2"
-              }
+            "block": "text",
+            "mods": {
+                "type": "h2"
+            }
           },
           {
             "block": "text",
             "mods": {
                 "type": "h3"
+            }
+          },
+          {
+            "block": "text",
+            "mods": {
+                "type": "h2"
             }
           }
       ]
@@ -78,9 +84,23 @@ const data = [
           },
         },
       },
+      {
+        code,
+        error,
+        location: {
+          end: {
+            column: 12,
+            line: 21,
+          },
+          start: {
+            column: 11,
+            line: 16,
+          },
+        },
+      },
     ],
-    length: 1,
-    message: 'H3, H2, H3',
+    length: 2,
+    message: 'H3, H2, H3, H2',
   },
   {
     json: `{

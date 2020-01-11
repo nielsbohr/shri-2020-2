@@ -60,6 +60,12 @@ const data = [
             "mods": {
                 "type": "h2"
             }
+          },
+          {
+            "block": "text",
+            "mods": {
+                "type": "h1"
+            }
           }
       ]
   }`,
@@ -78,9 +84,23 @@ const data = [
           },
         },
       },
+      {
+        code,
+        error,
+        location: {
+          end: {
+            column: 12,
+            line: 21,
+          },
+          start: {
+            column: 11,
+            line: 16,
+          },
+        },
+      },
     ],
-    length: 1,
-    message: 'H2, H1, H2',
+    length: 3,
+    message: 'H2, H1, H2, H1',
   },
   {
     json: `{

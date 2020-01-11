@@ -12,8 +12,8 @@ export function lint(linter: Linter): void {
   const allH1 = nodes.filter((node: Node) => node.node.mods && node.node.mods.type === 'h1');
   const allH2 = nodes.filter((node: Node) => node.node.mods && node.node.mods.type === 'h2');
   let h1: Node;
-  if (allH1.length) {
-    h1 = allH1[0];
+  if (allH1.length > 0) {
+    h1 = allH1[allH1.length - 1];
     allH2.forEach((node: Node) => {
       if (node.location.end < h1.location.start) { linter.addError(node.location, code, text); }
     });
