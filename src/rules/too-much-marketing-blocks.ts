@@ -1,9 +1,9 @@
 import { Linter } from "../Linter";
 import { Grid } from "../types";
 
-const market: Array<string> = ['commercial', 'offer'];
-const code: string = 'GRID.TOO_MUCH_MARKETING_BLOCKS';
-const text: string = 'Маркетинговые блоки занимают больше половины от всех колонок блока grid.';
+const MARKET: Array<string> = ['commercial', 'offer'];
+const CODE: string = 'GRID.TOO_MUCH_MARKETING_BLOCKS';
+const MESSAGE: string = 'Маркетинговые блоки занимают больше половины от всех колонок блока grid.';
 
 /**
   * Ищем отдельно гриды-родители, в которых указаны колонки, отдельно части.
@@ -29,13 +29,13 @@ export function lint(linter: Linter): void {
       const content = Array.isArray(fraction.node.content) ?
        fraction.node.content[0].block : fraction.node.content.block;
       
-      if (linter.isParent(fraction, grid) && market.includes(content)) {
+      if (linter.isParent(fraction, grid) && MARKET.includes(content)) {
         grid.market += parseInt(fraction.node.elemMods['m-col'], 10);
       }
     }
 
     if (grid.market > Math.floor(grid.columns / 2)) {
-      linter.addError(grid.location, code, text);
+      linter.addError(grid.location, CODE, MESSAGE);
     }
   }
 }

@@ -1,8 +1,8 @@
 import { Linter } from "../Linter";
 import { Node } from '../types';
 
-const code: string = 'TEXT.INVALID_H2_POSITION';
-const text: string = 'Заголовок второго уровня (блок text с модификатором type h2) не может находиться перед заголовком первого уровня на том же или более глубоком уровне вложенности.';
+const CODE: string = 'TEXT.INVALID_H2_POSITION';
+const MESSAGE: string = 'Заголовок второго уровня (блок text с модификатором type h2) не может находиться перед заголовком первого уровня на том же или более глубоком уровне вложенности.';
 
 /**
   * Получаем все ноды блока текст, фильтруем по заголовкам. Далее смотрим несовпадения в позициях
@@ -15,7 +15,7 @@ export function lint(linter: Linter): void {
   if (allH1.length > 0) {
     h1 = allH1[allH1.length - 1];
     allH2.forEach((node: Node) => {
-      if (node.location.end < h1.location.start) { linter.addError(node.location, code, text); }
+      if (node.location.end < h1.location.start) { linter.addError(node.location, CODE, MESSAGE); }
     });
   }
 }

@@ -1,9 +1,9 @@
 import { Linter } from '../Linter';
 import { Node, Warning } from '../types';
 
-const code: string = 'WARNING.INVALID_BUTTON_SIZE';
-const message: string = 'Размер кнопки блока warning должен быть на 1 шаг больше эталонного.';
-const sizes: Array<string> = ['xxs', 'xs', 's', 'm', 'l', 'xl', 'xxl', 'xxxl', 'xxxxl', 'xxxxxl'];
+const CODE: string = 'WARNING.INVALID_BUTTON_SIZE';
+const MESSAGE: string = 'Размер кнопки блока warning должен быть на 1 шаг больше эталонного.';
+const SIZES: Array<string> = ['xxs', 'xs', 's', 'm', 'l', 'xl', 'xxl', 'xxxl', 'xxxxl', 'xxxxxl'];
 
 /**
   * Cначала ищем эталонный текст блока warning, проходим по нодам блока текст и
@@ -37,9 +37,9 @@ export function lint(linter: Linter): void {
         button.node.mods && 
         button.node.mods.size &&
         linter.isParent(button, warning) &&
-        warning.text !== sizes[sizes.indexOf(button.node.mods.size) - 1]
+        warning.text !== SIZES[SIZES.indexOf(button.node.mods.size) - 1]
       ) {
-        linter.addError(button.location, code, message);
+        linter.addError(button.location, CODE, MESSAGE);
       }
     }
   }

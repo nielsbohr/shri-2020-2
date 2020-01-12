@@ -1,8 +1,8 @@
 import { Linter } from '../Linter';
 import { Node } from '../types';
 
-const code: string = 'TEXT.SEVERAL_H1';
-const text: string = 'Заголовок первого уровня (блок text с модификатором type h1) на странице должен быть единственным.';
+const CODE: string = 'TEXT.SEVERAL_H1';
+const MESSAGE: string = 'Заголовок первого уровня (блок text с модификатором type h1) на странице должен быть единственным.';
 
 /**
   * Получаем все ноды блока текст, фильтруем по заголовку H1. Выводим как ошибочные все после первого.
@@ -15,7 +15,7 @@ export function lint(linter: Linter): void {
   if (allH1.length > 0) {
     allH1.shift();
     allH1.forEach((node: Node) => {
-      linter.addError(node.location, code, text);
+      linter.addError(node.location, CODE, MESSAGE);
     });
   }
 }

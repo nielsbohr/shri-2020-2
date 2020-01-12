@@ -6,6 +6,11 @@ export interface LintError {
     location: NodeLocation;
 }
 
+export interface CacheNode {
+    type: string;
+    nodes: Array<Node>
+}
+
 export interface NodeLocation {
     start: Location;
     end: Location;

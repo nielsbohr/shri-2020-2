@@ -1,8 +1,8 @@
 import { Linter } from "../Linter";
 import { Node, Warning } from '../types';
 
-const code: string = 'WARNING.TEXT_SIZES_SHOULD_BE_EQUAL';
-const message: string = 'Блок Warning содержит тексты разных размеров.';
+const CODE: string = 'WARNING.TEXT_SIZES_SHOULD_BE_EQUAL';
+const MESSAGE: string = 'Блок Warning содержит тексты разных размеров.';
 
 /**
   * В нодах блока warning проходимся по нодам блока текст и ищем первое совпадение,
@@ -24,7 +24,7 @@ export function lint(linter: Linter): void {
         if (!warning.text) {
           warning.text = text.node.mods.size;
         } else if (warning.text && text.node.mods.size !== warning.text) {
-          linter.addError(warning.location, code, message);
+          linter.addError(warning.location, CODE, MESSAGE);
           break;
         }
       }

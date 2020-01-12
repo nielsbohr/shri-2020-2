@@ -1,12 +1,13 @@
-import { LintError, NodeIndexes, Node, NodeLocation, Location } from './types';
+import { LintError, CacheNode, NodeIndexes, Node, NodeLocation, Location } from './types';
 
 export class Linter {
   /**
   * Инициализация линтера
   * @param {string} json JSON, как строка.
   */
-  _json: string;
-  _errors: Array<LintError>;
+  private _json: string;
+  private _errors: Array<LintError>;
+  private _cache: Array<CacheNode>;
   constructor(json: string) {
     try {
       JSON.parse(json);
@@ -19,6 +20,7 @@ export class Linter {
     }
     this._json = json;
     this._errors = [];
+    this._cache = [];
   }
 
   get errors(): Array<LintError> {
@@ -51,9 +53,14 @@ export class Linter {
   * @returns {Array<any>}
   */
   getNodesByBlock(type: string, NodeLocation: string = this.json): Array<any> {
+    const cache: Array<CacheNode> = this._cache.filter((cacheNode) => cacheNode.type === type);
+    if (cache.length > 0) {
+      return cache[0].nodes;
+    }
     const nodes = [];
     const regex = new RegExp(`"block"\\s*:\\s*"${type}"`, 'g');
-    for (let n = 0, location: NodeIndexes; regex.test(NodeLocation); n += 1) {
+    let location;
+    while (regex.test(NodeLocation)) {
       location = this.findBrackets(regex.lastIndex);
       nodes.push(
         {
@@ -63,9 +70,13 @@ export class Linter {
       );
     }
 
+    this._cache.push({
+      nodes: nodes,
+      type: type
+    });
+
     return nodes;
   }
-
   
   /**
   * Получения ноды родителя
@@ -150,14 +161,14 @@ export class Linter {
   * Добавление объекта ошибки в массив this._errors.
   * @param {NodeIndexes} loc локация блока, loc.start - начало файла, loc.end - конец файла.
   * @param {string} code код ошибки.
-  * @param {string} error текст ошибки.
+  * @param {string} message текст ошибки.
   * @returns {LintError}
   */
-  addError(loc: NodeIndexes, code: string, text: string): void {
+  addError(loc: NodeIndexes, code: string, message: string): void {
     const info = this.getBlockInfo(loc);
     const error : LintError = {
         code: code,
-        error: text,
+        error: message,
         location: {
           start: info.start,
           end: info.end
