@@ -5,9 +5,6 @@ const CODE: string = 'WARNING.INVALID_PLACEHOLDER_SIZE';
 const MESSAGE: string = 'Допустимые размеры для блока placeholder в блоке warning (значение модификатора size): s, m, l.';
 const SIZES: Array<string> = ['s', 'm', 'l'];
 
-/**
-  * Получаем все ноды блока placeholder. Cмотрим несовпадения в размерах, если есть.
- */ 
 export function lint(linter: Linter): void {
   const placeholders = linter.getNodesByBlock('placeholder');
 

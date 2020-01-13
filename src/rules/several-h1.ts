@@ -4,9 +4,6 @@ import { Node } from '../types';
 const CODE: string = 'TEXT.SEVERAL_H1';
 const MESSAGE: string = 'Заголовок первого уровня (блок text с модификатором type h1) на странице должен быть единственным.';
 
-/**
-  * Получаем все ноды блока текст, фильтруем по заголовку H1. Выводим как ошибочные все после первого.
- */
 export function lint(linter: Linter): void {
   const allH1 = linter
     .getNodesByBlock('text')

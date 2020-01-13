@@ -4,10 +4,6 @@ import { Node } from '../types';
 const CODE: string = 'WARNING.TEXT_SIZES_SHOULD_BE_EQUAL';
 const MESSAGE: string = 'Блок Warning содержит тексты разных размеров.';
 
-/**
-  * В нодах блока warning проходимся по нодам блока текст и ищем первое совпадение,
-  *  остальные ноды блока текст не того размера выкидываем в ошибку
- */ 
 export function lint(linter: Linter): void {
   const texts: Array<Node> = linter.getNodesByBlock('text');
   const warnings: Array<Node> = linter.getNodesByBlock('warning');
