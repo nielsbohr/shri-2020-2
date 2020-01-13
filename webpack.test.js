@@ -5,7 +5,7 @@ module.exports = {
   output: {
     path: path.resolve(__dirname, 'build/'),
     filename: 'bundle.test.js',
-    publicPath: 'http://localhost:3000/build',
+    publicPath: 'http://localhost:3000/test/html',
   },
   devServer: {
     port: 3000,

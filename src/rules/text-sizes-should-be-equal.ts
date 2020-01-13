@@ -1,5 +1,5 @@
 import { Linter } from "../Linter";
-import { Node, Warning } from '../types';
+import { Node } from '../types';
 
 const CODE: string = 'WARNING.TEXT_SIZES_SHOULD_BE_EQUAL';
 const MESSAGE: string = 'Блок Warning содержит тексты разных размеров.';
@@ -10,7 +10,7 @@ const MESSAGE: string = 'Блок Warning содержит тексты разн
  */ 
 export function lint(linter: Linter): void {
   const texts: Array<Node> = linter.getNodesByBlock('text');
-  const warnings: Array<Warning> = linter.getNodesByBlock('warning');
+  const warnings: Array<Node> = linter.getNodesByBlock('warning');
   
   for (let i = 0; i < warnings.length; i++) {
     const warning = warnings[i];

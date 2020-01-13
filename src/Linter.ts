@@ -50,12 +50,12 @@ export class Linter {
   * Получения всех нод по типу блока
   * @param {string} type тип блока
   * @param {string} NodeLocation субстрока, по дефолту весь JSON
-  * @returns {Array<any>}
+  * @returns {Array<Node>}
   */
-  getNodesByBlock(type: string, NodeLocation: string = this.json): Array<any> {
-    const cache: Array<CacheNode> = this._cache.filter((cacheNode) => cacheNode.type === type);
-    if (cache.length > 0) {
-      return cache[0].nodes;
+  getNodesByBlock(type: string, NodeLocation: string = this.json): Array<Node> {
+    const cache: CacheNode | undefined = this._cache.find((cacheNode) => cacheNode.type === type);
+    if (cache) {
+      return cache.nodes;
     }
     const nodes = [];
     const regex = new RegExp(`"block"\\s*:\\s*"${type}"`, 'g');

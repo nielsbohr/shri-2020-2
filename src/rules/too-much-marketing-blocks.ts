@@ -1,5 +1,5 @@
 import { Linter } from "../Linter";
-import { Grid } from "../types";
+import { Node } from "../types";
 
 const MARKET: Array<string> = ['commercial', 'offer'];
 const CODE: string = 'GRID.TOO_MUCH_MARKETING_BLOCKS';
@@ -12,11 +12,11 @@ const MESSAGE: string = 'Маркетинговые блоки занимают 
   * блоки. Если больше половины - выбрасываем грид-родитель в ошибку
  */ 
 export function lint(linter: Linter): void {
-  const allGrids: Array<Grid> = linter.getNodesByBlock('grid');
-  const grids: Array<Grid> = allGrids.filter((grid: Grid) => {
+  const allGrids: Array<Node> = linter.getNodesByBlock('grid');
+  const grids: Array<Node> = allGrids.filter((grid: Node) => {
     return grid.node.mods && grid.node.mods['m-columns'];
   });
-  const fractions: Array<Grid> = allGrids.filter((fraction: Grid) => {
+  const fractions: Array<Node> = allGrids.filter((fraction: Node) => {
     return fraction.node.elemMods && fraction.node.elemMods['m-col'];
   });
 

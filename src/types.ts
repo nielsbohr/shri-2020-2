@@ -21,6 +21,14 @@ export interface Location {
     line: number;
 }
 
+export interface Node {
+    node: Block;
+    location: NodeIndexes;
+    text?: string;
+    columns?: number;
+    market?: number;
+}
+
 export interface NodeIndexes {
     start: number;
     end: number;
@@ -31,18 +39,4 @@ export interface Block {
     content?: any;
     mods?: any;
     elemMods?: any;
-}
-
-export interface Node {
-    node: Block;
-    location: NodeIndexes;
-} 
-
-export interface Warning extends Node{
-    text: string;
-}
-
-export interface Grid extends Node{
-    columns: number;
-    market: number;
 }
