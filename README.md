@@ -27,4 +27,4 @@ export function lint(linter: Linter): void {
 
 `npm run dev` - Автоборка бандла через HMR \
 `npm test` - Прогон тестов через Node.js \
-`npm run devtest` - Прогон тестов через браузер \
+`npm run devtest` - Прогон тестов через браузер
